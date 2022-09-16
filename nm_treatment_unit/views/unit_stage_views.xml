@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+      <!-- Guest types -->
+        <record id="guest_type_search" model="ir.ui.view">
+            <field name="name">unit.guest.stages.search</field>
+            <field name="model">unit.guest.stages</field>
+            <field name="arch" type="xml">
+                <search string="Guest Stages">
+                   <field name="name" string="Name"/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+
+
+    <record id="guest_type_edit" model="ir.ui.view">
+        <field name="name">unit.guest.stagese.form</field>
+        <field name="model">unit.guest.stages</field>
+        <field name="arch" type="xml">
+            <form string="Guest Stage" delete="0">
+                <field name="active" invisible="1" />
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <!-- <field name="mail_template_id" context="{'default_model': 'project.task'}"/> -->
+                            
+                            <field name="sequence" groups="base.group_no_one"/>
+                           
+                        </group>
+                        <group>
+                            <field name="fold"/>
+                            <field name="is_closed" groups="base.group_no_one"/>
+                            <field name="unit_ids" widget="many2many_tags" options="{'color_field': 'color'}" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <group string="Stage Description and Tooltips">
+                        <group>
+                            <p class="text-muted" colspan="2">
+                                At each stage, employees can block guests or mark them as ready for the next step.
+                                You can customize here the labels for each state.
+                            </p>
+                            <div class="row ml-1" colspan="2">
+                                <label for="legend_normal" string=" " class="o_status mt4"
+                                    title="Guest in progress. Click to block or set as done."
+                                    aria-label="Task in progress. Click to block or set as done." role="img"/>
+                                <div class="col-11 pl-0">
+                                    <field name="legend_normal"/>
+                                </div>
+                            </div>
+                            <div class="row ml-1" colspan="2">
+                                <label for="legend_blocked" string=" " class="o_status o_status_red mt4"
+                                    title="Guest is blocked. Click to unblock or set as done."
+                                    aria-label="Guest is blocked. Click to unblock or set as done." role="img"/>
+                                <div class="col-11 pl-0">
+                                    <field name="legend_blocked"/>
+                                </div>
+                            </div>
+                            <div class="row ml-1" colspan="2">
+                                <label for="legend_done" string=" " class="o_status o_status_green mt4"
+                                    title="This step is done. Click to block or set in progress."
+                                    aria-label="This step is done. Click to block or set in progress." role="img"/>
+                                <div class="col-11 pl-0">
+                                    <field name="legend_done"/>
+                                </div>
+                            </div>
+
+                            <p class="text-muted mt-2" colspan="2">
+                                You can also add a description to help your coworkers understand the meaning and purpose of the stage.
+                            </p>
+                            <field name="description" placeholder="Add a description..." nolabel="1" colspan="2"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+        <record id="personal_guest_type_edit" model="ir.ui.view">
+            <field name="name">unit.guest.stages.form</field>
+            <field name="model">unit.guest.stages</field>
+            <field name="arch" type="xml">
+                <form string="Task Stage" delete="0">
+                    <field name="active" invisible="1" />
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}" />
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="sequence" groups="base.group_no_one"/>
+                            </group>
+                            <group>
+                                <field name="fold"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="description" placeholder="Add a description..." nolabel="1" colspan="2"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="guest_type_tree" model="ir.ui.view">
+            <field name="name">unit.guest.stages.tree</field>
+            <field name="model">unit.guest.stages</field>
+            <field name="arch" type="xml">
+                <tree string="Guest Stage" delete="0" sample="1" multi_edit="1">
+                    <field name="sequence" widget="handle" optional="show"/>
+                    <field name="name"/>
+                    <field name="mail_template_id" optional="hide"/>
+                    <field name="unit_ids" optional="show" widget="many2many_tags" options="{'color_field': 'color'}" />
+                    <field name="fold" optional="show"/>
+                    <field name="user_id" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_unit_guest_type_kanban" model="ir.ui.view">
+            <field name="name">unit.guest.stages.kanban</field>
+            <field name="model">unit.guest.stages</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <field name="name"/>
+                    <field name="fold"/>
+                    <field name="description"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong><t t-esc="record.name.value"/></strong>
+                                    </div>
+                                </div>
+                                <field name="unit_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <t t-if="record.description.value">
+                                    <hr class="mt8 mb8"/>
+                                    <t t-esc="record.description.value"/>
+                                </t>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="open_guest_type_form" model="ir.actions.act_window">
+            <field name="name">Guest Stages</field>
+            <field name="res_model">unit.guest.stages</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_id" ref="guest_type_tree"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                No stages found. Let's create one!
+              </p><p>
+                Track the progress of your guest from their creation to their closing.
+              </p>
+            </field>
+        </record>
+
+        <record id="open_guest_type_form_domain" model="ir.actions.act_window">
+            <field name="name">Guest Stages</field>
+            <field name="res_model">unit.guest.stages</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('unit_ids','=', unit_id)]</field>
+            <field name="view_id" ref="guest_type_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Create a new stage in the guest pipeline
+                </p><p>
+                Define the steps that will be used in the unit from the
+                creation of the guest, up to the closing of the guest or issue.
+                You will use these stages in order to track the progress in
+                solving a guest or an issue.
+                </p>
+            </field>
+        </record>
+
+        <record id="unlink_guest_type_action" model="ir.actions.server">
+            <field name="name">Delete</field>
+            <field name="model_id" ref="nm_treatment_unit.model_unit_guest_stages"/>
+            <field name="binding_model_id" ref="nm_treatment_unit.model_unit_guest_stages"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.unlink_wizard(stage_view=True)</field>
+        </record>
+
+
+    <menuitem 
+        action="open_guest_type_form" 
+        id="menu_unit_config_guest_stages" 
+        name="Guest Stages" 
+        parent="nm_treatment_unit.menu_configuration" 
+        sequence="10" 
+        groups="base.group_no_one"/>
+
+
+</odoo>

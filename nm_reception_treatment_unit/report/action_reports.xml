@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="action_intake_form_report" model="ir.actions.report">
+            <field name="name">Intake Form</field>
+            <field name="model">intake.form</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">nm_reception_treatment_unit.report_intake_form_document</field>
+            <field name="report_file">nm_reception_treatment_unit.report_intake_form_document</field>
+            <field name="binding_model_id" ref="model_intake_form"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

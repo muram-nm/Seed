@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem 
+            id="menu_reception"
+            name="Reception"
+            parent="nm_health_wellness_reception_sales.menu_wellness_reception_main"
+            sequence="1"/>
+    <menuitem id="menu_reception_order"
+            action="nm_health_wellness_reception_sales.action_reception_order"
+            parent="menu_reception"
+            sequence="1"/>
+    <menuitem 
+        id="menu_reception_services"
+        action="nm_health_wellness_reception_sales.action_reception_services"
+        parent="menu_wellness_reception_main"
+        sequence="2"/>
+    <menuitem 
+        id="menu_reception_customer"
+        action="nm_health_wellness_reception_sales.action_reception_customer"
+        parent="menu_reception"
+        sequence="3"/>
+
+
+
+</odoo>

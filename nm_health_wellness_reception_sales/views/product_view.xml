@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	 <data>
+
+		<!-- <record id="product_template_form_view_inherited" model="ir.ui.view">
+			<field name="name">reception.product.template.form</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view"/>
+			<field name="arch" type="xml">
+				<data>
+					<div name="options" position="inside">
+						<span class="d-inline-block">
+							<field name="reception_ok"/>
+							<label for="reception_ok"/>
+						</span>
+					</div>
+				</data>
+			</field>
+		</record> -->
+
+		<record id="reception_service_form" model="ir.ui.view">
+			<field name="name">reception.service.form</field>
+			<field name="model">product.template</field>
+			<field name="arch" type="xml">
+				<form string="">
+					<header>
+						
+					</header>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="name" placeholder="Service Name ..."/>
+							</h1>							
+						</div>
+						<div name="options">
+							<span class="d-inline-block">
+								<field name="reception_ok"/>
+								<label for="reception_ok"/>
+							</span>
+						</div>
+						<notebook>
+							<page name="gen_info" string="General Information">
+								<group>
+									<group>
+										<field name="detailed_type" invisible="1"/>
+										<field name="service_tracking" invisible="1"/>
+									</group>
+									<group>
+										<field name="list_price"/>
+									</group>
+								</group>
+							</page>
+						</notebook>
+					
+					
+						
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="reception_service_tree" model="ir.ui.view">
+			<field name="name">reception.service.tree</field>
+			<field name="model">product.template</field>
+			<field name="arch" type="xml">
+				<tree string="">
+					<field name="name"/>
+					<field name="list_price"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_reception_services" model="ir.actions.act_window">
+             <field name="name">Services</field>
+             <field name="res_model">product.template</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_mode">tree,kanban,form</field>
+             <field name="domain">[('reception_ok', '=', True)]</field>
+	         <field name="context">{
+				'default_reception_ok':True,
+				'default_detailed_type':'service',
+				'default_service_tracking':'task_global_project'
+				
+				}</field>
+			<field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('reception_service_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('reception_service_form')})]"/>
+        </record>
+
+      
+
+	 </data>
+</odoo>

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_unit_unit,treatment_unit,model_unit_unit,,1,1,1,1
+access_unit_guest,treatment_guest,model_unit_guest,,1,1,1,1
+access_unit_stage,treatment_stage,model_unit_guest_stages,,1,1,1,1
+access_unit_update,treatment_update,model_unit_update,,1,1,1,1
+access_unit_personal_stage,unit.personal.stage.user,model_unit_guest_stage_personal,base.group_user,1,1,1,1
+access_report_unit_guest_user,unit.unit.guest.user,model_report_unit_guest_user,nm_treatment_unit.group_unit_manager,1,1,1,1
+

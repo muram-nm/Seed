@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Menus -->
+    <menuitem
+        id="menu_treatment_unit_root"
+        name="Treatment Unit"
+        web_icon="nm_treatment_unit,static/description/icon.png"
+        />
+  
+    <menuitem id="menu_configuration"
+        groups="nm_treatment_unit.group_unit_manager"
+        parent="menu_treatment_unit_root"
+        name="Configuration"
+        sequence="30"/>
+    
+    <menuitem 
+        action="project.project_tags_action" 
+        id="menu_unit_tags_act" 
+        parent="menu_configuration"/>
+     <menuitem id="unit_menu_config_activity_type"
+        action="project.mail_activity_type_action_config_project_types"
+        parent="menu_configuration"/>
+    
+</odoo>

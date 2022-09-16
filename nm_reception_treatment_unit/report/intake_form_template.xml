@@ -1,0 +1,1361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_intake_form_document" >
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h3>
+                            <center>Intake Questionnaire</center>
+                        </h3>
+                        <table class="table">
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Name:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.partner_id.name"></span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;">QID:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.qid"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Date of Birth:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.date_of_birth"></span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;">Age:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.age"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Email:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.email"></span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Cell Phone:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.phone"></span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <p >
+                            <span style="font-size:22px;">
+                                How did you hear about Seed Health and Wellness Center?
+                            </span>
+                            <br/>
+                            <t style="font-size:20px;">
+                                <span>IFM Website</span>
+                                <t t-if="o.hear_about_us == 'ifm' ">
+                                    <img 
+                                     src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                     style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                                 </t>
+                                <span style="margin-left:100px">Referral from Clinician</span>
+                                <t t-if="o.hear_about_us == 'referral_clinician' ">
+                                    <img 
+                                     src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                     style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                                 </t>
+                                <span style="margin-left:100px">Referral from friend/family</span>
+                                <t t-if="o.hear_about_us == 'referral_friend_family' ">
+                                    <img 
+                                     src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                     style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                                 </t>
+                                <br/>
+                                <span>member</span>
+                                <t t-if="o.hear_about_us == 'member' ">
+                                    <img 
+                                     src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                     style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                                 </t>
+                                <span style="margin-left:130px">Google Search</span>
+                                <t t-if="o.hear_about_us == 'google' ">
+                                    <img 
+                                     src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                     style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                                 </t>
+                                <span style="margin-left:150px">Social Media:
+                                    <t t-if="o.hear_about_us == 'media' ">
+                                        <img 
+                                         src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                         style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+
+                                        <span style="margin-left:5px" t-esc="o.media"/>
+                                     </t>
+                                     <t t-else="">___________________</t>
+                                </span>
+                                
+                                <br/>
+                                <span>Other:
+                                    <t t-if="o.hear_about_us == 'other' ">
+                                        <img 
+                                         src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                         style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+
+                                        <span style="margin-left:5px" t-esc="o.hear_other"/>
+                                    </t>
+                                    <t t-else="">___________________</t>
+                                </span>
+                            </t>
+                        </p>
+                        <p>
+                            <span style="font-size:22px;">
+                                When, where and from whom did you last receive medical or health care?
+                            </span>
+                            <br/>
+                            <t style="font-size:20px;">
+                                <span>Emergency Contact:
+                                    <t t-if="o.emergency_contact"><span t-esc="o.emergency_contact"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Relationship:
+                                    <t t-if="o.relationship"><span t-esc="o.relationship"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <br/>
+                                <span>Cell:
+                                    <t t-if="o.cell"><span t-esc="cell"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                            </t>
+                        </p>
+
+                        <br/>
+                        <h5>Current Health Concerns in order of priority:</h5>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Describe Problem</th>
+                                <th>Severity</th>
+                                <th>Prior Treatment</th>
+                                <th>Success</th>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.health_concerns_ids">
+                                    <t t-foreach="o.health_concerns_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.problem"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.severity"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.prior_treatment"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.success"></span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                        <h5>What do you hope to achieve in your visit with us?</h5>
+                        <div style="border: 1px solid black;padding: 10px;height:70px;">
+                            <span t-esc="o.customer_achieve"/>
+                        </div>
+
+                        <br/><br/>
+                        <h5>Medical History</h5>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Describe Problem</th>
+                                <th>Severity</th>
+                                <th>Treatment</th>
+                                <th>Success</th>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.medical_history_ids">
+                                    <t t-foreach="o.medical_history_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.problem"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.severity"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.prior_treatment"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.success"></span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                        <h5>Allergies</h5>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Medication/Food</th>
+                                <th>Reaction</th>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.allergies_ids">
+                                    <t t-foreach="o.allergies_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.medication_food"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.reaction"></span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                        <h3><u>Lifestyle Review:</u></h3>
+                        <br/>
+                        <h5>Sleep:</h5>
+                        <p>
+                            <span style="font-size:22px;">
+                                How many hours of sleep do you get each night:
+                            </span>
+                            <span style="margin-left:5px" t-esc="sleep_hours"/>
+                        </p>
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you have problems with sleep?If yes,
+                            </span>
+                            <span style="margin-left:5px" t-esc="sleep_problems"/>
+                        </p>
+
+                        <br/>
+                        <h5>Exercise:</h5>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Activity</th>
+                                <th>Type</th>
+                                <th># of times per week</th>
+                                <th>Duration (minutes)</th>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.exercise_ids">
+                                    <t t-foreach="o.exercise_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.activity"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.type"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.week_times"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.duration"></span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you feel motivated to exercise?
+                            </span>
+                            <br/>
+                            <span style="margin-left:10px">Yes</span>
+                            <t t-if="o.exercise_motivated == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:30px">A Little</span>
+                            <t t-if="o.exercise_motivated == 'little' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:30px">No</span>
+                            <t t-if="o.exercise_motivated == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <br/>
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you have any problems that limit exercise? If yes, explain:
+                            </span>
+                            <span style="margin-left:5px" t-esc="exercise_problems"/>
+                        </p>
+
+                        <br/>
+                        <h5><strong>Nutrition:</strong></h5>
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you currently follow any of the following special diets or nutritional programs?(Check all that apply) 
+                            </span>
+
+                            <br/>
+                            <span>Blood Type </span>
+                            <t t-if="o.blood_type">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">Vegetarian </span>
+                            <t t-if="o.vegetarian">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">Vegan </span>
+                            <t t-if="o.vegan">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">Low Sodium </span>
+                            <t t-if="o.low_sodium">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">No Dairy  </span>
+                            <t t-if="o.no_dairy">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">No Gluten </span>
+                            <t t-if="o.no_gluten">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <br/>
+                            <span>Low Fat </span>
+                            <t t-if="o.low_fat">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">High Protein </span>
+                            <t t-if="o.high_protein">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">Low Carb </span>
+                            <t t-if="o.low_carb">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">KETO </span>
+                            <t t-if="o.keto">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span>Other:
+                                <t t-if="o.other">
+                                    <img 
+                                     src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                     style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+
+                                    <span style="margin-left:5px" t-esc="o.other_nutrition"/>
+                                </t>
+                                <t t-else="">___________________</t>
+                            </span>
+                        </p>
+
+                        <br/>
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you have sensitivities to certain foods?If yes, list food and symptoms:
+                            </span>
+                            <span t-esc="o.certain_foods"/>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you eat 3 meals a day?
+                            </span>
+                            <span style="margin-left:10px">Yes </span>
+                            <t t-if="o.three_meal == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">No </span>
+                            <t t-if="o.three_meal == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Does skipping a meal greatly affect you?
+                            </span>
+                            <span style="margin-left:10px">Yes </span>
+                            <t t-if="o.skipping_meal == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:70px">No </span>
+                            <t t-if="o.skipping_meal == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                How many meals do you eat out per week?
+                            </span>
+                            <span style="margin-left:10px">0-1 </span>
+                            <t t-if="o.meals_per_week == '0-1' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">1-3 </span>
+                            <t t-if="o.meals_per_week == '1-3' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">3-5 </span>
+                            <t t-if="o.meals_per_week == '3-5' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">More than 5 meals per week</span>
+                            <t t-if="o.meals_per_week == 'more_than_5' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <h5><strong>Diet:</strong></h5>
+                        <p>Please record what you eat in a typical day:</p>
+                        <p>Breakfast:
+                            <t t-if="o.breakfast"><span t-esc="o.breakfast"/></t>
+                            <t t-else="">_____________________________</t>
+                        </p>
+                        <p>Lunch:
+                            <t t-if="o.lunch"><span t-esc="o.lunch"/></t>
+                            <t t-else="">_____________________________</t>
+                        </p>
+                        <p>Dinner:
+                            <t t-if="o.dinner"><span t-esc="o.dinner"/></t>
+                            <t t-else="">_____________________________</t>
+                        </p>
+                        <p>Snacks:
+                            <t t-if="o.snacks"><span t-esc="o.snacks"/></t>
+                            <t t-else="">_____________________________</t>
+                        </p>
+                        <p>Fluids:
+                            <t t-if="o.fluids"><span t-esc="o.fluids"/></t>
+                            <t t-else="">_____________________________</t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you drink caffeinated beverages?
+                            </span>
+                            <br/>
+                            <span style="font-size:22px;">
+                                Coffee (cups per day)
+                            </span>
+                            <span style="margin-left:10px">1 </span>
+                            <t t-if="o.coffee == '1' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">2-4 </span>
+                            <t t-if="o.coffee == '2-4' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">More than 4 </span>
+                            <t t-if="o.coffee == 'more_than_4' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+
+                            <br/>
+                            <span style="font-size:22px;">
+                                Tea
+                            </span>
+                            <span style="margin-left:10px">1 </span>
+                            <t t-if="o.tea == '1' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">2-4 </span>
+                            <t t-if="o.tea == '2-4' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">More than 4 </span>
+                            <t t-if="o.tea == 'more_than_4' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Caffeinated sodas—regular or diet (cans per day) 
+                            </span>
+                            <span style="margin-left:10px">1 </span>
+                            <t t-if="o.sodas == '1' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">2-4 </span>
+                            <t t-if="o.sodas == '2-4' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">More than 4 </span>
+                            <t t-if="o.sodas == 'more_than_4' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you have adverse reactions to caffeine?
+                            </span>
+                            <span style="margin-left:10px">Yes </span>
+                            <t t-if="o.adverse_reactions == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">No </span>
+                            <t t-if="o.adverse_reactions == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">If yes, explain: </span>
+                             <t t-if="o.reactions_explain"><span t-esc="o.reactions_explain"/></t>
+                            <t t-else="">________________________</t>
+                        </p>
+
+                        <h5><strong>Smoking:</strong></h5>
+                        <p>
+                            <span style="font-size:22px;">
+                                Do you smoke currently?
+                            </span>
+                            <span style="margin-left:10px">Yes </span>
+                            <t t-if="o.smoke == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">No </span>
+                            <t t-if="o.smoke == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">Packs per day</span>
+                            <span t-esc="o.packs_per_day"/><br/>
+                            <span style="margin-left:40px">Number of years</span>
+                            <span t-esc="o.smoke_years"/><br/>
+                            <span>What type?</span>
+                            <span style="margin-left:10px">Cigarettes </span>
+                            <t t-if="o.smoke_types == 'cigarettes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:30px">Vape </span>
+                            <t t-if="o.smoke_types == 'vape' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:30px">Cigar </span>
+                            <t t-if="o.smoke_types == 'cigar' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:30px">Other </span>
+                            <t t-if="o.smoke_types == 'other' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                                
+                                <t t-if="o.other_smoke"><span t-esc="o.other_smoke"/></t>
+                                <t t-else="">________________________</t>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Have you attempted to quit?
+                            </span>
+                            <span style="margin-left:10px" t-esc="o.attempted_to_quit"/>
+
+                            <br/>
+                            <span style="font-size:22px;">
+                                If yes, using what methods:
+                            </span>
+                            <span style="margin-left:10px" t-esc="o.attempted_method"/>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                If you smoked previously: Packs per day:
+                            </span><br/>
+                            <span style="font-size:22px;">
+                                Are you regularly exposed to second-hand smoke? 
+                            </span>
+                            <span style="margin-left:10px" t-esc="o.second_hand_smoke"/>
+                        </p>
+
+                        <h5><strong>Dental History:</strong></h5>
+                        <p>
+                            <span style="font-size:22px;">
+                                Check if you have any of the following, and provide number if applicable:
+                            </span>
+                            <br/>
+                            <t style="font-size:20px;">
+                                <span>Silver/mercury fillings:
+                                    <t t-if="o.fillings"><span t-esc="o.fillings"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Caps/Crowns:
+                                    <t t-if="o.caps_crowns"><span t-esc="o.caps_crowns"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Problems with chewing:
+                                    <t t-if="o.problems_chewing"><span t-esc="problems_chewing"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Root canals:
+                                    <t t-if="o.gold_fillings"><span t-esc="o.gold_fillings"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Tooth pain/sensitivity:
+                                    <t t-if="o.root_canals"><span t-esc="o.root_canals"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Implants:
+                                    <t t-if="o.implants"><span t-esc="implants"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Bleeding gums :
+                                    <t t-if="o.bleeding_gums"><span t-esc="bleeding_gums"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Gingivitis:
+                                    <t t-if="o.gingivitis"><span t-esc="gingivitis"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Abscesses:
+                                    <t t-if="o.abscesses"><span t-esc="abscesses"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                                <span>Other dental concerns (explain):
+                                    <t t-if="o.other_dental_concerns"><span t-esc="other_dental_concerns"/></t>
+                                    <t t-else="">_____________________________</t>
+                                </span>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Have you had any mercury fillings removed?
+                            </span>
+                            <span style="margin-left:10px">Yes </span>
+                            <t t-if="o.fillings_removed == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:10px">No </span>
+                            <t t-if="o.fillings_removed == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:10px">If yes, when/how:  </span>
+                            <span t-esc="o.how_removed"/>
+                        </p>
+                            
+                        <h5><strong>Hospitalizations:</strong></h5>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Date</th>
+                                <th>Reason</th>
+                            </thead>
+                            <tbody>
+                                <t t-if="o.fillings_removed_ids">
+                                    <t t-foreach="o.fillings_removed_ids" t-as="line">
+                                        <tr>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.activity"></span>
+                                            </td>
+                                            <td>
+                                                <span style="font-weight: bold;" t-esc="line.type"></span>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <h5><strong>Birth/Childhood History:</strong></h5>
+                        <p>
+                            <span style="font-size:22px;">
+                                You were born: 
+                            </span>
+                            <span style="margin-left:40px">Term </span>
+                            <t t-if="o.born == 'term' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">Premature </span>
+                            <t t-if="o.born == 'premature' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Were there any pregnancy or birth complications?
+                            </span>
+                            <span style="margin-left:10px" t-esc="o.pregnancy_complications"> </span>
+                            
+                            <span style="font-size:22px;margin-left:10px">
+                                If yes, explain: 
+                            </span>
+                            <span style="margin-left:10px" t-esc="o.complications"> </span>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                You were:<span t-esc="o.breast"/>
+                            </span>
+                            <span style="margin-left:10px">Breast-fed/How long?  </span>
+                            <t t-if="o.breast == 'breast_fed' ">
+                                <span t-esc="o.breast_fed"/>
+                            </t>
+                            <span style="margin-left:10px">Bottle-fed/Type of formula:  </span>
+                            <t t-if="o.breast == 'bottle_fed' ">
+                                <span t-esc="o.type_of_bottle_fed"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                Age of introduction of: 
+                            </span>
+                            <span style="margin-left:40px">Solid food </span>
+                            <t t-if="o.solid_food_age"><span t-esc="solid_food_age"/></t>
+                            <t t-else="">_____________</t>
+                            
+                            <span style="margin-left:40px">Wheat </span>
+                            <t t-if="o.wheat_age"><span t-esc="wheat_age"/></t>
+                            <t t-else="">_____________</t>
+                            
+                            <span style="margin-left:40px">Dairy </span>
+                            <t t-if="o.dairy_age"><span t-esc="dairy_age"/></t>
+                            <t t-else="">_____________</t>
+                        </p>
+                            
+                        <p>
+                            <span style="font-size:22px;">
+                                As a child, were there any foods that were avoided because they gave you symptoms?
+                            </span><br/>
+                            <span style="margin-left:40px">Yes </span>
+                            <t t-if="o.food_symptoms == 'yes' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">No </span>
+                            <t t-if="o.food_symptoms == 'no' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                            <span style="margin-left:40px">Don’t know </span>
+                            <t t-if="o.food_symptoms == 'dont_know' ">
+                                <img 
+                                 src="/nm_reception_treatment_unit/static/description/true_icon.jpeg"
+                                 style="max-height:0.7cm; max-width:1cm;margin-bottom:10px;"/>
+                            </t>
+                        </p>
+
+                        <p>
+                            <span style="font-size:22px;">
+                                If yes, what foods and what symptoms? (Example: milk—gas and diarrhea)
+                            </span>
+                        </p>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>
+                                    <h5>
+                                        <strong>Family History:</strong>
+                                    </h5>
+                                </th>
+                                <th>M G
+R
+A
+N
+D
+M
+O
+T
+H
+E
+R</th>
+                                <th>M G
+R
+A
+N
+D
+F
+A
+T
+H
+E
+R</th>
+                                <th>P G
+R
+A
+N
+D
+M
+O
+T
+H
+E
+R
+</th>
+                                <th>P G
+R
+A
+N
+D
+F
+A
+T
+H
+E
+R</th>
+                                <th>M
+O
+T
+H
+E
+R</th>
+                                <th>F
+A
+T
+H
+E
+R
+</th>
+                                <th>B
+R
+O
+T
+H
+E
+R
+</th>
+                                <th>S
+I
+S
+T
+E
+R</th>
+                                <th>C
+H
+I
+L
+D
+</th>
+                                <th>O
+T
+H
+E
+R
+</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.family_disease" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.disease_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.m_grand_mother"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.m_grand_father"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.p_grand_mother"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.p_grand_father"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mother"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.father"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.brother"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.sister"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.child"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.other"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <h5><strong>Birth/Childhood History:</strong></h5>
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Inflammatory/Immune</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.inflammatory_immune" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.immune_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Respiratory</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.respiratory" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.respiratory_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Skin Problems</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.skin_problems" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.skin_problem_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Gastrointestinal</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.gastrointestinal" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.gastrointestinal_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Endocrine/Metabolic</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.endocrine_metabolic" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.endocrine_metabolic_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white">
+                                <th>Emotional</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.emotional" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.emotional_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered">
+                            <thead style="background-color:#999999;color:white"> 
+                                <th>Urinary</th>
+                                <th>Mild</th>
+                                <th>Moderate</th>
+                                <th>Severe</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.urinary" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.urinary_id.name"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.mild"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.moderate"></span>
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: bold;" t-esc="line.severe"></span>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

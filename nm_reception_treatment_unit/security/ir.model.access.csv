@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acl_intake_form,intake_form,model_intake_form,,1,1,1,1
+acl_medical_medical,medical_medical,model_medical_medical,,1,1,1,1
+acl_exercise_exercise,exercise_exercise,model_exercise_exercise,,1,1,1,1
+acl_disease_disease,disease_disease,model_disease_disease,,1,1,1,1
+acl_family_disease,family_disease,model_family_disease,,1,1,1,1
+acl_immune_symptomology,immune_symptomology,model_immune_symptomology,,1,1,1,1
+acl_respiratory_symptomology,respiratory_symptomology,model_respiratory_symptomology,,1,1,1,1
+acl_skin_problem_symptomology,skin_problem_symptomology,model_skin_problem_symptomology,,1,1,1,1
+acl_gastrointestinal_symptomology,gastrointestinal_symptomology,model_gastrointestinal_symptomology,,1,1,1,1
+acl_endocrine_metabolic_symptomology,endocrine_metabolic_symptomology,model_endocrine_metabolic_symptomology,,1,1,1,1
+acl_emotional_symptomology,emotional_symptomology,model_emotional_symptomology,,1,1,1,1
+acl_urinary_symptomology,urinary_symptomology,model_urinary_symptomology,,1,1,1,1

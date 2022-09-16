@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="unit_unit_view_inherit_unit_filter" model="ir.ui.view">
+        <field name="name">unit.unit.select.inherit.unit</field>
+        <field name="model">unit.unit</field>
+        <field name="inherit_id" ref="nm_treatment_unit.view_unit_unit_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="reception_order_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="unit_unit_view_tree_inherit_reception_unit" model="ir.ui.view">
+        <field name="name">unit.unit.tree.inherit.reception.unit</field>
+        <field name="model">unit.unit</field>
+        <field name="inherit_id" ref="nm_treatment_unit.view_unit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="reception_line_id" optional="hide" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_edit_unit_inherit_form" model="ir.ui.view">
+        <field name="name">unit.unit.view.inherit</field>
+        <field name="model">unit.unit</field>
+        <field name="inherit_id" ref="nm_treatment_unit.edit_unit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <!-- <field name="has_any_so_to_invoice" invisible="1"/> -->
+                <button name="action_create_invoice" string="Create Invoice" type="object" class="oe_highlight oe_read_only"  />
+            </xpath>
+            <xpath expr="//button[@name='%(nm_treatment_unit.act_unit_unit_2_unit_guest_all)d']" position="before">
+                <button class="d-none d-md-inline oe_stat_button"
+                        type="object" name="action_view_ro" icon="fa-dollar"
+                        attrs="{'invisible': [('reception_order_id', '=', False)]}"
+                        string="receptions Order"
+                      >
+                    <field name="reception_order_id" attrs="{'invisible': True}"/> 
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'always_reload': True}</attribute>
+                <attribute name="context">{'res_partner_search_mode': 'customer'}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_reception_unit_inherit_form" model="ir.ui.view">
+        <field name="name">unit.guest.view.inherit</field>
+        <field name="model">unit.guest</field>
+        <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+        <field name="inherit_id" ref="nm_treatment_unit.view_guest_form2"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'always_reload': True}</attribute>
+                <attribute name="context">{'res_partner_search_mode': 'customer'}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_phone']" position="after">
+                <field name="reception_order_id" attrs="{'invisible': True}" />
+                <field name="reception_line_id" string="receptions Order Item" attrs="{'invisible': [('partner_id', '=', False)]}" options='{"no_open": True}' readonly="1" context="{'create': False, 'edit': False, 'delete': False}"/>
+                <field name="commercial_partner_id" invisible="1" />
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name="customer_id"/>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="invisible">True</attribute>
+                
+            </field>
+        </field>
+    </record>
+
+    <record id="unit_guest_view_form_inherit_reception_line_editable" model="ir.ui.view">
+        <field name="name">unit.guest.form.inherit.reception.line.editable.receptionsman</field>
+        <field name="model">unit.guest</field>
+        <field name="inherit_id" ref="view_reception_unit_inherit_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reception_line_id']" position="attributes">
+                <attribute name="options">{"no_create": True}</attribute>
+                <attribute name="readonly">0</attribute>
+            </xpath>
+        </field>
+        <!-- <field name="groups_id" eval="[(4, ref('receptions_team.group_reception_receptionsman'))]"/> -->
+    </record>
+
+    <record id="unit_guest_view_search" model="ir.ui.view">
+        <field name="name">unit.guest.search.inherit</field>
+        <field name="model">unit.guest</field>
+        <field name="inherit_id" ref="nm_treatment_unit.view_guest_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="reception_order_id" string="reception Order" filter_domain="['|', ('reception_order_id', 'ilike', self), ('reception_line_id', 'ilike', self)]"/>
+            </xpath>
+            <xpath expr="//search/group/filter[@name='customer']" position="after">
+                <!-- TODO: Remove me in master -->
+                <filter string="receptions Order" name="reception_order_id" context="{'group_by': 'reception_order_id'}" invisible="1"/>
+                <filter string="receptions Order Item" name="reception_line_id" context="{'group_by': 'reception_line_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

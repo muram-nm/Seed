@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     <record id="unit_view_form_simplified" model="ir.ui.view">
+            <field name="name">unit.unit.view.form.simplified</field>
+            <field name="model">unit.unit</field>
+            <field name="arch" type="xml">
+                <form string="Treatment Unit">
+                    <group>
+                        <field name="name" class="o_project_name oe_inline"
+                            string="Unit Name" placeholder="e.g. Office Party"/>
+                        <field name="user_id" invisible="1"/>
+                    </group>
+                    <div name="alias_def" colspan="2" attrs="{'invisible': [('alias_domain', '=', False)]}">
+                        <label for="alias_name" class="oe_inline" string="Create guests by sending an email to"/>
+                        <field name="alias_enabled" invisible="1"/>
+                        <span>
+                            <field name="alias_name" class="oe_inline" placeholder="e.g. office-party"/>@<field name="alias_domain" class="oe_inline" readonly="1" />
+                        </span>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+    <record id="unit_view_form_simplified_footer" model="ir.ui.view">
+        <field name="name">unit.unit.view.form.simplified</field>
+        <field name="model">unit.unit</field>
+        <field name="inherit_id" ref="nm_treatment_unit.unit_view_form_simplified"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">
+                <footer>
+                    <button string="Create" name="action_view_guest" type="object" class="btn-primary o_open_guests" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="view_guest_search_form" model="ir.ui.view">
+            <field name="name">unit.guest.search.form</field>
+            <field name="model">unit.guest</field>
+            <field name="arch" type="xml">
+               <search string="Guests">
+                    <field name="name" string="Guest"/>
+                    <field name="tag_ids"/>
+                    <field name="user_ids" filter_domain="[('user_ids', 'ilike', self), ('user_ids.active', 'in', [True, False])]"/>
+                    <field string="Treatment" name="display_unit_id"/>
+                    <field name="stage_id"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="parent_id"/>
+                    <filter string="My Guests" name="my_guests" domain="[('user_ids', 'in', uid)]"/>
+                    <filter string="Unassigned" name="unassigned" domain="[('user_ids', '=', False)]"/>
+                    <separator/>
+                    <filter string="Starred" name="starred" domain="[('priority', 'in', [0, 1])]"/>
+                    <separator/>
+                    <filter string="Late Guests" name="late" domain="[('date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                    <separator/>
+                   
+                    <separator/>
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction', '=', True)]"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                    <separator/>
+                    <filter invisible="1" string="Late Activities" name="activities_overdue"
+                        domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                        help="Show all records which has next action date is before today"/>
+                    <filter invisible="1" string="Today Activities" name="activities_today"
+                        domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                        domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Stage" name="stage" context="{'group_by': 'stage_id'}"/>
+                        <filter string="Personal Stage" name="personal_stage" context="{'group_by': 'personal_stage_type_ids'}"/>
+                        <filter string="Assignees" name="user" context="{'group_by': 'user_ids'}"/>
+                        <filter string="Treatment" name="treatment" context="{'group_by': 'unit_id'}"/>
+                        <filter string="Customer" name="customer" context="{'group_by': 'partner_id'}"/>
+                        <filter string="Kanban State" name="kanban_state" context="{'group_by': 'kanban_state'}"/>
+                        <filter string="Deadline" name="date_deadline" context="{'group_by': 'date_deadline'}"/>
+                        <filter string="Creation Date" name="group_create_date" context="{'group_by': 'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+
+    <record id="act_unit_2_unit_guest_all" model="ir.actions.act_window">
+        <field name="name">Guest</field>
+        <field name="res_model">unit.guest</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+        <field name="domain">[('display_unit_id', '=', active_id)]</field>
+        <field name="context">{
+            'pivot_row_groupby': ['user_ids'],
+            'default_unit_id': active_id,
+            'show_treatment_update': True,
+        }</field>
+        <field name="search_view_id" ref="view_guest_search_form"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No guest found. Let's create one!
+            </p><p>
+                To get things done, use activities and status on guest.<br/>
+                Chat in real-time or by email to collaborate efficiently.
+            </p>
+        </field>
+    </record>
+
+
+
+    <!-- Form -->
+    <record id="open_create_unit" model="ir.actions.act_window">
+        <field name="name">Create a unit</field>
+        <field name="res_model">unit.unit</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="unit_view_form_simplified_footer"/>
+        <field name="target">new</field>
+        <field name="context">{"default_allow_billable": 1}</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_unit_kanban">
+            <field name="name">unit.unit.kanban</field>
+            <field name="model">unit.unit</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_project_kanban o_emphasize_colors" on_create="nm_treatment_unit.open_create_unit" js_class="project_project_kanban" sample="1">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="commercial_partner_id"/>
+                    <field name="color"/>
+                    <field name="guest_count"/>
+                    <field name="label_guests"/>
+                    <field name="alias_id"/>
+                    <field name="alias_name"/>
+                    <field name="alias_domain"/>
+                    <field name="is_favorite"/>
+                    <field name="rating_percentage_satisfaction"/>
+                    <field name="rating_status"/>
+                    <field name="rating_active" />
+                    <field name="analytic_account_id"/>
+                    <field name="date"/>
+                    <field name="doc_count"/>
+                    <field name="privacy_visibility"/>
+                    <field name="last_update_color"/>
+                    <field name="last_update_status"/>
+                    <field name="tag_ids"/>
+                    <progressbar field="last_update_status" colors='{"on_track": "success", "at_risk": "warning", "off_track": "danger", "on_hold": "info"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon oe_kanban_content oe_kanban_card">
+                                <div class="o_project_kanban_main ">
+                                    <div class="o_kanban_card_content mw-100">
+                                        <div class="o_kanban_primary_left">
+                                            <div class="o_primary">
+                                                <span class="o_text_overflow"><t t-esc="record.name.value"/></span>
+                                                <span class="o_text_overflow text-muted" t-if="record.partner_id.value">
+                                                    <span class="fa fa-user mr-2" aria-label="Partner" title="Partner"></span><t t-esc="record.partner_id.value"/>
+                                                </span>
+                                                <div t-if="record.date.raw_value or record.date_start.raw_value" class="text-muted o_row">
+                                                    <span class="fa fa-clock-o mr-2" title="Dates"></span><field name="date_start"/>
+                                                    <i t-if="record.date.raw_value and record.date_start.raw_value" class="fa fa-long-arrow-right mx-2 oe_read_only" aria-label="Arrow icon" title="Arrow"/>
+                                                    <field name="date"/>
+                                                </div>
+                                                <div t-if="record.alias_name.value and record.alias_domain.value" class="text-muted">
+                                                    <span class="fa fa-envelope-o mr-2" aria-label="Domain Alias" title="Domain Alias"></span><t t-esc="record.alias_id.value"/>
+                                                </div>
+                                                
+                                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_manage_pane dropdown-menu" role="menu" groups="base.group_user">
+                                        <div class="row">
+                                            <div class="col-6 o_kanban_card_manage_section o_kanban_manage_view">
+                                                <div role="menuitem" class="o_kanban_card_manage_title">
+                                                    <span>View</span>
+                                                </div>
+                                                <div role="menuitem">
+                                                    <a name="action_view_guests" type="object">Guests</a>
+                                                </div>
+                                                <div role="menuitem" t-if="record.doc_count.raw_value">
+                                                    <a name="attachment_tree_view" type="object">Documents</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 o_kanban_card_manage_section o_kanban_manage_reporting" groups="nm_treatment_unit.group_unit_manager">
+                                                <div role="menuitem" class="o_kanban_card_manage_title">
+                                                    <span>Reporting</span>
+                                                </div>
+                                                <div role="menuitem">
+                                                    <a name="action_view_guests_analysis" type="object">Guests Analysis</a>
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <div class="o_kanban_card_manage_settings row" groups="nm_treatment_unit.group_unit_manager">
+                                            <div role="menuitem" aria-haspopup="true" class="col-8">
+                                                <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                                            </div>
+                                            <!-- <div role="menuitem" class="col-4">
+                                                <a t-if="record.privacy_visibility.raw_value == 'portal'" class="dropdown-item" role="menuitem" name="%(project.project_share_wizard_action)d" type="action">Share</a>
+                                                <a class="dropdown-item" role="menuitem" type="edit" name="action_view_kanban_unit">Edit</a>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <a class="o_kanban_manage_toggle_button o_dropdown_kanban" href="#" groups="base.group_user">
+                                        <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                                    </a>
+                                    <span>
+                                       <field name="is_favorite" widget="boolean_favorite" nolabel="1" force_save="1" />
+                                    </span>
+                                </div>
+                                <div class="o_kanban_record_bottom mt-3">
+                                    <div class="oe_kanban_bottom_left">
+                                        <div class="o_project_kanban_boxes">
+                                            <a class="o_project_kanban_box" name="action_view_guests" type="object">
+                                                <div>
+                                                    <span class="o_value"><t t-esc="record.guest_count.value"/></span>
+                                                    <span class="o_label"><t t-esc="record.label_guests.value"/></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span t-att-class="'o_status_bubble mx-0 o_color_bubble_' + record.last_update_color.value" t-att-title="record.last_update_status.value"></span>
+                                        <field name="user_id" widget="many2one_avatar_user" t-if="record.user_id.raw_value"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+
+  <!-- Tree -->
+  <record id="treatment_unit_tree" model="ir.ui.view">
+    <field name="name">unit.unit.tree</field>
+    <field name="model">unit.unit</field>
+    <field name="arch" type="xml">
+      <tree string="Treatment Unit">
+        <field name="name"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Form -->
+  <record id="treatment_unit_form" model="ir.ui.view">
+    <field name="name">unit.unit.form</field>
+    <field name="model">unit.unit</field>
+    <field name="arch" type="xml">
+      <form string="Treatment Unit">
+        <header>
+        </header>
+        <sheet>
+            <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+            <div class="oe_title">
+                <h1>
+                    <field name="name" class="o_text_overflow" placeholder="Unit Name"/>
+                </h1>
+            </div>
+            <group>
+            <group>
+                <field name="label_guests" string="Name of the guests"/>
+                <field name="partner_id" widget="res_partner_many2one"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+            </group>
+            <group>
+                <field name="active" invisible="0" widget="toggle_button"/>
+                <field name="user_id" string="Supervisor" widget="many2one_avatar_user" attrs="{'readonly':[('active','=',False)]}" domain="[('share', '=', False)]"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </group>
+        </group>
+        <notebook>
+            <page name="description" string="Description">
+                <field name="description"/>
+            </page>
+            <page name="settings" string="Settings">
+                <group>
+                    <group>
+                        <field name="analytic_account_id" domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]" context="{'default_partner_id': partner_id}" groups="analytic.group_analytic_accounting"/>
+                        <!-- <field name="privacy_visibility" widget="radio"/> -->
+                    </group>
+                </group>
+            </page>
+        </notebook>
+        </sheet>
+        <div class="oe_chatter">
+            <field name="message_follower_ids" options="{'post_refresh':True}" help="Follow this unit to automatically track the events associated to guests and issues of this unit." groups="base.group_user"/>
+            <field name="activity_ids"/>
+            <field name="message_ids"/>
+        </div>
+      </form>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_treatment_unit" model="ir.actions.act_window">
+    <field name="name">Units</field>
+    <field name="res_model">unit.unit</field>
+    <field name="view_mode">kanban,tree,form</field>
+  </record>
+
+
+    <!-- Unit -->
+    <record id="edit_unit" model="ir.ui.view">
+        <field name="name">unit.unit.form</field>
+        <field name="model">unit.unit</field>
+        <field name="arch" type="xml">
+            <form string="Unit" class="o_form_project_project" delete="0">
+                <header>                
+                    
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" groups="nm_treatment_unit.group_unit_manager"/>
+                </header>
+            <sheet string="Unit">
+                <div class="oe_button_box" name="button_box" groups="base.group_user">
+                    <field name="currency_id" invisible="1"/>
+                    <button class="oe_stat_button" type="action"
+                        name="%(act_unit_unit_2_unit_guest_all)d" icon="fa-tasks">
+                        <field string="Guest In Progress" name="guest_count" widget="statinfo" options="{'label_field': 'label_guests'}"/>
+                    </button>
+                    <!-- <button class="oe_stat_button" name="%(project.project_milestone_all)d" type="action" icon="fa-check-square-o">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="milestone_count" nolabel="1"/>
+                            </span>
+                            <span class="o_stat_text">
+                                Milestones
+                            </span>
+                        </div>
+                    </button> -->
+                    <!-- <button name="action_view_all_rating" type="object" attrs="{'invisible': ['|', ('rating_active', '=', False), ('rating_percentage_satisfaction', '=', -1)]}" class="oe_stat_button oe_read_only" icon="fa-smile-o" groups="project.group_project_rating">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="rating_percentage_satisfaction" nolabel="1"/>
+                                %
+                            </span>
+                            <span class="o_stat_text">
+                                Customer Satisfaction
+                            </span>
+                        </div>
+                    </button> -->
+                    
+                    <!-- <button class="oe_stat_button" type="object" name="action_view_analytic_account_entries" icon="fa-usd" attrs="{'invisible': [('analytic_account_id', '=', False)]}" groups="analytic.group_analytic_accounting">
+                        <div class="o_form_field o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="analytic_account_balance"/>
+                            </span>
+                            <span class="o_stat_text">Gross Margin</span>
+                        </div>
+                    </button> -->
+                    <!-- <button class="oe_stat_button" name="%(project.project_collaborator_action)d" type="action" icon="fa-users" groups="project.group_project_manager">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="collaborator_count" nolabel="1"/>
+                            </span>
+                            <span class="o_stat_text">
+                                Collaborators
+                            </span>
+                        </div>
+                    </button> -->
+                    <!-- <button class="oe_stat_button" name="%(project.project_update_all_action)d" type="action" groups="project.group_project_manager">
+                        <div class="pl-4">
+                            <field name="last_update_color" invisible="1"/>
+                            <field name="last_update_status" widget="status_with_color" options="{'color_field': 'last_update_color'}"/>
+                        </div>
+                    </button> -->
+                    <!-- <button class="oe_stat_button o_project_not_clickable" disabled="disabled" groups="!project.group_project_manager">
+                        <div class="pl-4">
+                            <field name="last_update_color" invisible="1"/>
+                            <field name="last_update_status" widget="status_with_color" options="{'color_field': 'last_update_color', 'no_quick_edit': 1}"/>
+                        </div>
+                    </button> -->
+                </div>
+                <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" class="o_text_overflow" placeholder="Unit Name"/>
+                    </h1>
+                </div>
+                <group>
+                    <group>
+                        <field name="label_guests" string="Name of the guests"/>
+                        <field name="partner_id" widget="res_partner_many2one"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    </group>
+                    <group>
+                        <field name="active" invisible="1"/>
+                        <field name="user_id" string="Project Manager" widget="many2one_avatar_user" attrs="{'readonly':[('active','=',False)]}" domain="[('share', '=', False)]"/>
+                        <label for="date_start" string="Dates"/>
+                        <div name="dates" class="o_row">
+                            <field name="date_start" widget="daterange" options='{"related_end_date": "date"}'/>
+                            <i class="fa fa-long-arrow-right mx-2 oe_edit_only" aria-label="Arrow icon" title="Arrow"/>
+                            <i class="fa fa-long-arrow-right mx-2 oe_read_only" aria-label="Arrow icon" title="Arrow" attrs="{'invisible': [('date_start', '=', False), ('date', '=', False)]}"/>
+                            <field name="date" widget="daterange" options='{"related_start_date": "date_start"}'/>
+                        </div>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="description" string="Description">
+                        <field name="description"/>
+                    </page>
+                    <page name="settings" string="Settings">
+                        <group>
+                            <group>
+                                <field name="analytic_account_id" domain="['|', ('company_id', '=', company_id), ('company_id', '=', False)]" context="{'default_partner_id': partner_id}" groups="analytic.group_analytic_accounting"/>
+                                <field name="privacy_visibility" widget="radio"/>
+                            </group>
+                            <group>
+                                <div name="alias_def" colspan="2" class="pb-2" attrs="{'invisible': [('alias_domain', '=', False)]}">
+                                    <!-- Always display the whole alias in edit mode. It depends in read only -->
+                                    <field name="alias_enabled" invisible="1"/>
+                                    <span class="font-weight-bold oe_read_only" attrs="{'invisible': [('alias_name', '!=', False)]}" style="opacity: 0.7;">Create guest by sending an email to </span>
+                                    <span class="font-weight-bold oe_read_only text-dark" attrs="{'invisible': [('alias_name', '=', False)]}">Create guest by sending an email to </span>
+                                    <span class="font-weight-bold oe_edit_only text-dark">Create guest by sending an email to </span>
+                                        <field name="alias_value" class="oe_read_only d-inline" readonly="1" widget="email" attrs="{'invisible':  [('alias_name', '=', False)]}" />
+                                        <span class="oe_edit_only">
+                                            <field name="alias_name" class="oe_inline"/>@<field name="alias_domain" class="oe_inline" readonly="1"/>
+                                        </span>
+                                </div>
+                                <!-- the alias contact must appear when the user start typing and it must disappear
+                                    when the string is deleted. -->
+                                <field name="alias_contact" class="oe_inline" string="Accept Emails From"
+                                        attrs="{'invisible': ['|', ('alias_name', '=', ''), ('alias_name', '=', False)]}"/>
+                            </group>
+                            <group name="extra_settings">
+                            </group>
+                        </group>
+                        <div class="row mt16 o_settings_container">
+                            <div id="rating_settings" class="col-lg-6 o_setting_box" groups="project.group_project_rating">
+                                <div class="o_setting_left_pane">
+                                    <field name="rating_active"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="rating_active" />
+                                    <div class="text-muted">
+                                        Get customer feedback
+                                    </div>
+                                    <div class="mt16" attrs="{'invisible':[('rating_active','==',False)]}">
+                                        <field name="rating_status" widget="radio" />
+                                        <div  attrs="{'required': [('rating_status','=','periodic')], 'invisible': [('rating_status','!=','periodic')]}">
+                                            <label for="rating_status_period"/>
+                                            <field name="rating_status_period"/>
+                                        </div>
+                                        <!-- <div class="content-group">
+                                                <div class="mt8">
+                                                    <button name="%(project.open_task_type_form_domain)d" context="{'unit_id':id}" icon="fa-arrow-right" type="action" string="Set a Rating Email Template on Stages" class="btn-link"/>
+                                                </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-6 o_setting_box"  id="subtask_settings" groups="project.group_subtask_project">
+                                <div class="o_setting_left_pane">
+                                    <field name="allow_subtasks" />
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="allow_subtasks" />
+                                    <div class="text-muted">
+                                        Split your tasks to organize your work into sub-milestones
+                                    </div>
+                                </div>
+                            </div> -->
+                           
+                            
+                        </div>
+                    </page>
+                </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" options="{'post_refresh':True}" help="Follow this unit to automatically track the events associated to guest and issues of this unit." groups="base.group_user"/>
+                <field name="activity_ids"/>
+                <field name="message_ids"/>
+            </div>
+            </form>
+        </field>
+    </record>
+    
+    <record id="view_unit" model="ir.ui.view">
+        <field name="name">unit.unit.tree</field>
+        <field name="model">unit.unit</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="active == False" string="Units" delete="0" multi_edit="1" sample="1">
+                <field name="sequence" optional="show" widget="handle"/>
+                <field name="message_needaction" invisible="1"/>
+                <field name="active" invisible="1"/>
+                <field name="name" string="Name" class="font-weight-bold"/>
+                <field name="partner_id" optional="show" string="Customer"/>
+                <field name="privacy_visibility" optional="hide"/>
+                <field name="company_id" optional="show"  groups="base.group_multi_company" options="{'no_create': True, 'no_create_edit': True}"/>
+                <field name="analytic_account_id" optional="hide" groups="analytic.group_analytic_accounting"/>
+                <field name="date_start" string="Start Date" widget="daterange" options="{'related_end_date': 'date'}"/>
+                <field name="date" string="End Date" widget="daterange" options="{'related_start_date': 'date_start'}"/>
+                <field name="user_id" optional="show" string="Supervisor" widget="many2one_avatar_user" options="{'no_open':True, 'no_create': True, 'no_create_edit': True}"/>
+                <field name="last_update_color" invisible="1"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
+                <field name="last_update_status" string="Status" optional="show" widget="status_with_color" options="{'color_field': 'last_update_color'}"/>
+                <field name="stage_id" options="{'no_open': True}" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_unit_unit_filter" model="ir.ui.view">
+        <field name="name">unit.unit.select</field>
+        <field name="model">unit.unit</field>
+        <field name="arch" type="xml">
+            <search string="Search Unit">
+                <field name="name" string="Unit"/>
+                <field name="user_id" string="Supervisor"/>
+                <field name="partner_id" string="Customer" filter_domain="[('partner_id', 'child_of', self)]"/>
+                <field name="analytic_account_id"/>
+                <field name="stage_id" groups="nm_treatment_unit.group_unit_stages"/>
+                <field name="tag_ids"/>
+                <filter string="My Favorites" name="my_units" domain="[('favorite_user_ids', 'in', uid)]"/>
+                <separator/>
+                <filter string="Followed" name="followed_by_me" domain="[('message_is_follower', '=', True)]"/>
+                <filter string="My Units" name="own_units" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Open" name="open" domain="[('stage_id.fold', '=', False)]" groups="nm_treatment_unit.group_unit_stages"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Supervisor" name="Manager" context="{'group_by': 'user_id'}"/>
+                    <filter string="Customer" name="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="status" context="{'group_by': 'last_update_status'}"/>
+                    <filter string="Stage" name="groupby_stage" context="{'group_by': 'stage_id'}" groups="nm_treatment_unit.group_unit_stages"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="open_view_unit_all_config" model="ir.actions.act_window">
+        <field name="name">Units</field>
+        <field name="res_model">unit.unit</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_unit')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_unit_kanban')})]"/>
+        <field name="search_view_id" ref="view_unit_unit_filter"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Units found. Let's create one!
+            </p><p>
+                Units regroup guests on the same topic, and each has its dashboard.
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        action="open_view_unit_all_config" 
+        id="menu_units_config" 
+        name="Units" 
+        parent="nm_treatment_unit.menu_configuration" 
+        sequence="1"/>
+
+      <menuitem
+        id="menu_treatment_unit"
+        name="Units"
+        action="action_treatment_unit"
+        parent="nm_treatment_unit.menu_treatment_unit_root"
+        sequence="10"/>
+  
+
+    <!-- Reporting menus -->
+    <!-- <menuitem id="menu_unit_report" name="Reporting"
+        groups="nm_treatment_unit.group_unit_manager"
+        parent="nm_treatment_unit.menu_treatment_unit_root" 
+        sequence="20"/>
+
+    <menuitem id="menu_project_report_task_analysis"
+        name="Guest Analysis"
+        action="nm_treatment_unit.action_unit_guest_user_tree"
+        parent="menu_unit_report"
+        sequence="10"/> -->
+
+    <!-- <menuitem id="rating_rating_menu_project"
+        action="rating_rating_action_project_report"
+        parent="menu_project_report"
+        groups="nm_treatment_unit.group_project_rating"
+        sequence="40"/> -->
+        
+</odoo>

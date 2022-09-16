@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="unit_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'nm_treatment_unit', 'bin_size': False}</field>
+        </record>
+
+        <menuitem 
+            id="unit_config_settings_menu_action" 
+            name="Settings" 
+            parent="nm_treatment_unit.menu_configuration"
+            sequence="0" 
+            action="unit_config_settings_action" 
+            groups="base.group_system"/>
+
+</odoo>

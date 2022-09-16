@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit_reception_unit" model="ir.ui.view">
+        <field name="name">reception.order.form.reception.unit</field>
+        <field name="model">reception.order</field>
+        <field name="inherit_id" ref="nm_health_wellness_reception_sales.reception_order_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_invoice']" position="before">
+                <button type="object" name="action_view_guest" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('guests_count', '=', 0)]}" groups="nm_treatment_unit.group_unit_user">
+                    <field name="guests_count" widget="statinfo" string="Guests"/>
+                </button>
+                <button type="object" name="action_view_unit_ids" class="oe_stat_button" icon="fa-puzzle-piece" string="Units"  groups="nm_treatment_unit.group_unit_manager" states="sale">
+                    <field name="unit_ids" invisible="1"/>
+                </button>
+            </xpath>
+            <!-- <xpath expr="//field[@name='reception_order_line']/tree/field[@name='product_id']" position="after">
+                <field name="unit_id"/>
+            </xpath> -->
+            <xpath expr="//page[@name='order_lines']" position="after">
+                <page string="Other Info" name="other_information">
+                    <group>
+                        <group name="sale_info" string="Invoicing">
+                            <field name="fiscal_position_id" options="{'no_create': True}"/>
+                            <field name="analytic_account_id" context="{ 'default_name':name}" attrs="{'readonly': [('invoice_count','!=',0),('state','=','sale')]}" groups="analytic.group_analytic_accounting" force_save="1"/>
+                            <field name="invoice_status" states="sale,done" groups="base.group_no_one"/>
+                            <!-- <field name="visible_unit" invisible="1"/> -->
+                            <field name="unit_id" options="{'no_create': True}" />
+                        </group>
+                    </group>
+                </page>
+                <!-- <page string="Units">
+                    <field name="unit_ids"/>
+                </page>
+                <page string="Guests">
+                    <field name="guests_ids"/>
+                </page> -->
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

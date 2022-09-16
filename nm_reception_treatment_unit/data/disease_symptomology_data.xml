@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Disease -->
+        <record id="disease_1" model="disease.disease">
+            <field name="name">ADHD</field>
+        </record>
+        <record id="disease_2" model="disease.disease">
+            <field name="name">Anxiety</field>
+        </record>
+        <record id="disease_3" model="disease.disease">
+            <field name="name">Arthritis</field>
+        </record>
+        <record id="disease_4" model="disease.disease">
+            <field name="name">Asthma</field>
+        </record>
+        <record id="disease_5" model="disease.disease">
+            <field name="name">Autism</field>
+        </record>
+        <record id="disease_6" model="disease.disease">
+            <field name="name">Autoimmune Disease (Crohn’s, Lupus, Hashimoto’s)</field>
+        </record>
+        <record id="disease_7" model="disease.disease">
+            <field name="name">Cancer</field>
+        </record>
+        <record id="disease_8" model="disease.disease">
+            <field name="name">Dementia</field>
+        </record>
+        <record id="disease_9" model="disease.disease">
+            <field name="name">Depression</field>
+        </record>
+        <record id="disease_10" model="disease.disease">
+            <field name="name">Diabetes</field>
+        </record>
+        <record id="disease_11" model="disease.disease">
+            <field name="name">Eczema</field>
+        </record>
+        <record id="disease_12" model="disease.disease">
+            <field name="name">Genetic Disorders</field>
+        </record>
+        <record id="disease_13" model="disease.disease">
+            <field name="name">Heart Disease</field>
+        </record>
+        <record id="disease_14" model="disease.disease">
+            <field name="name">Hypertension</field>
+        </record>
+        <record id="disease_15" model="disease.disease">
+            <field name="name">Irritable Bowel Syndrome</field>
+        </record>
+        <record id="disease_16" model="disease.disease">
+            <field name="name">Kidney Disease</field>
+        </record>
+        <record id="disease_17" model="disease.disease">
+            <field name="name">Psychiatric Disorders</field>
+        </record>
+        <record id="disease_18" model="disease.disease">
+            <field name="name">Seizures/epilepsy</field>
+        </record>
+        <record id="disease_19" model="disease.disease">
+            <field name="name">Stroke</field>
+        </record>
+        <record id="disease_20" model="disease.disease">
+            <field name="name">Substance Abuse</field>
+        </record>
+
+        <!-- Inflammatory/Immune -->
+        <record id="rec_1" model="immune.symptomology">
+            <field name="name">Autoimmune Disease</field>
+        </record>
+        <record id="rec_2" model="immune.symptomology">
+            <field name="name">Chronic Fatigue Syndrome</field>
+        </record>
+        <record id="rec_3" model="immune.symptomology">
+            <field name="name">Crohn’s/Ulcerative Colitis</field>
+        </record>
+        <record id="rec_4" model="immune.symptomology">
+            <field name="name">Environmental Allergies</field>
+        </record>
+        <record id="rec_5" model="immune.symptomology">
+            <field name="name">Food Allergies</field>
+        </record>
+        <record id="rec_6" model="immune.symptomology">
+            <field name="name">Hepatitis</field>
+        </record>
+        <record id="rec_7" model="immune.symptomology">
+            <field name="name">Immune Deficiency</field>
+        </record>
+        <record id="rec_8" model="immune.symptomology">
+            <field name="name">Multiple Chemical Sensitivities</field>
+        </record>
+        <record id="rec_9" model="immune.symptomology">
+            <field name="name">Rheumatoid Arthritis</field>
+        </record>
+
+        <!-- Respiratory -->
+        <record id="respiratory_1" model="respiratory.symptomology">
+            <field name="name">Asthma</field>
+        </record>
+        <record id="respiratory_2" model="respiratory.symptomology">
+            <field name="name">Bad Breath</field>
+        </record>
+        <record id="respiratory_3" model="respiratory.symptomology">
+            <field name="name">COPD</field>
+        </record>
+        <record id="respiratory_4" model="respiratory.symptomology">
+            <field name="name">Cough</field>
+        </record>
+        <record id="respiratory_5" model="respiratory.symptomology">
+            <field name="name">Emphysema</field>
+        </record>
+        <record id="respiratory_6" model="respiratory.symptomology">
+            <field name="name">Frequent Sinus Infections</field>
+        </record>
+        <record id="respiratory_7" model="respiratory.symptomology">
+            <field name="name">Hay fever/Allergies</field>
+        </record>
+        <record id="respiratory_8" model="respiratory.symptomology">
+            <field name="name">Post nasal drip</field>
+        </record>
+        <record id="respiratory_9" model="respiratory.symptomology">
+            <field name="name">Sinus Fullness</field>
+        </record>
+        <record id="respiratory_10" model="respiratory.symptomology">
+            <field name="name">Sleep Apnea</field>
+        </record>
+        <record id="respiratory_11" model="respiratory.symptomology">
+            <field name="name">Snoring</field>
+        </record>
+        <record id="respiratory_12" model="respiratory.symptomology">
+            <field name="name">Sore Throat</field>
+        </record>
+
+        <!-- Skin Problems -->
+        <record id="skin_1" model="skin_problem.symptomology">
+            <field name="name">Acne</field>
+        </record>
+        <record id="skin_2" model="skin_problem.symptomology">
+            <field name="name">Brittle Hair</field>
+        </record>
+        <record id="skin_3" model="skin_problem.symptomology">
+            <field name="name">Brittle Nails</field>
+        </record>
+        <record id="skin_4" model="skin_problem.symptomology">
+            <field name="name">Dandruff</field>
+        </record>
+        <record id="skin_5" model="skin_problem.symptomology">
+            <field name="name">Dark circles under eyes</field>
+        </record>
+        <record id="skin_6" model="skin_problem.symptomology">
+            <field name="name">Eczema</field>
+        </record>
+        <record id="skin_7" model="skin_problem.symptomology">
+            <field name="name">Hair Loss</field>
+        </record>
+        <record id="skin_8" model="skin_problem.symptomology">
+            <field name="name">Herpes</field>
+        </record>
+        <record id="skin_9" model="skin_problem.symptomology">
+            <field name="name">Hives</field>
+        </record>
+        <record id="skin_10" model="skin_problem.symptomology">
+            <field name="name">Lackluster skin</field>
+        </record>
+        <record id="skin_11" model="skin_problem.symptomology">
+            <field name="name">Moles</field>
+        </record>
+        <record id="skin_12" model="skin_problem.symptomology">
+            <field name="name">Oily Skin</field>
+        </record>
+        <record id="skin_13" model="skin_problem.symptomology">
+            <field name="name">Pale Skin</field>
+        </record>
+        <record id="skin_14" model="skin_problem.symptomology">
+            <field name="name">Psoriasis</field>
+        </record>
+        <record id="skin_15" model="skin_problem.symptomology">
+            <field name="name">Rash</field>
+        </record>
+        <record id="skin_16" model="skin_problem.symptomology">
+            <field name="name">Red Face</field>
+        </record>
+        <record id="skin_17" model="skin_problem.symptomology">
+            <field name="name">Sensitive to bites</field>
+        </record>
+        <record id="skin_18" model="skin_problem.symptomology">
+            <field name="name">Skin darkening</field>
+        </record>
+        <record id="skin_19" model="skin_problem.symptomology">
+            <field name="name">Strong body odor</field>
+        </record>
+        <record id="skin_20" model="skin_problem.symptomology">
+            <field name="name">Thick calluses</field>
+        </record>
+        <record id="skin_21" model="skin_problem.symptomology">
+            <field name="name">Vitiligo</field>
+        </record>
+        <record id="skin_22" model="skin_problem.symptomology">
+            <field name="name">Arms Itching</field>
+        </record>
+        <record id="skin_23" model="skin_problem.symptomology">
+            <field name="name">Ear Canals Itching</field>
+        </record>
+        <record id="skin_24" model="skin_problem.symptomology">
+            <field name="name">Eyes Itching</field>
+        </record>
+        <record id="skin_25" model="skin_problem.symptomology">
+            <field name="name">Feet Itching</field>
+        </record>
+        <record id="skin_26" model="skin_problem.symptomology">
+            <field name="name">Hands Itching</field>
+        </record>
+        <record id="skin_27" model="skin_problem.symptomology">
+            <field name="name">Legs Itching</field>
+        </record>
+        <record id="skin_28" model="skin_problem.symptomology">
+            <field name="name">Nipples Itching</field>
+        </record>
+        <record id="skin_29" model="skin_problem.symptomology">
+            <field name="name">Nose Itching</field>
+        </record>
+        <record id="skin_30" model="skin_problem.symptomology">
+            <field name="name">Genitals Itching</field>
+        </record>
+        <record id="skin_31" model="skin_problem.symptomology">
+            <field name="name">Roof of mouth Itching</field>
+        </record>
+        <record id="skin_32" model="skin_problem.symptomology">
+            <field name="name">Scalp Itching</field>
+        </record>
+        <record id="skin_33" model="skin_problem.symptomology">
+            <field name="name">Skin in general Itching</field>
+        </record>
+        <record id="skin_34" model="skin_problem.symptomology">
+            <field name="name">Throat Itching</field>
+        </record>
+
+        <!-- Gastrointestinal -->
+        <record id="recor_1" model="gastrointestinal.symptomology">
+            <field name="name">Bloating</field>
+        </record>
+        <record id="recor_2" model="gastrointestinal.symptomology">
+            <field name="name">Blood in Stools</field>
+        </record>
+        <record id="recor_3" model="gastrointestinal.symptomology">
+            <field name="name">Burping</field>
+        </record>
+        <record id="recor_4" model="gastrointestinal.symptomology">
+            <field name="name">Constipation</field>
+        </record>
+        <record id="recor_5" model="gastrointestinal.symptomology">
+            <field name="name">Diarrhea</field>
+        </record>
+        <record id="recor_6" model="gastrointestinal.symptomology">
+            <field name="name">Dry Mouth</field>
+        </record>
+        <record id="recor_7" model="gastrointestinal.symptomology">
+            <field name="name">Fissures</field>
+        </record>
+        <record id="recor_8" model="gastrointestinal.symptomology">
+            <field name="name">Gallstones</field>
+        </record>
+        <record id="recor_9" model="gastrointestinal.symptomology">
+            <field name="name">Gas</field>
+        </record>
+        <record id="recor_10" model="gastrointestinal.symptomology">
+            <field name="name">Reflux (GERD)</field>
+        </record>
+        <record id="recor_11" model="gastrointestinal.symptomology">
+            <field name="name">Heartburn</field>
+        </record>
+        <record id="recor_12" model="gastrointestinal.symptomology">
+            <field name="name">Hemorrhoids</field>
+        </record>
+        <record id="recor_13" model="gastrointestinal.symptomology">
+            <field name="name">Irritable Bowel</field>
+        </record>
+        <record id="recor_14" model="gastrointestinal.symptomology">
+            <field name="name">Mucus in stools</field>
+        </record>
+        <record id="recor_15" model="gastrointestinal.symptomology">
+            <field name="name">Peptic Ulcer Disease</field>
+        </record>
+        <record id="recor_16" model="gastrointestinal.symptomology">
+            <field name="name">Periodontal Disease</field>
+        </record>
+        <record id="recor_17" model="gastrointestinal.symptomology">
+            <field name="name">Sore Tongue</field>
+        </record>
+        <record id="recor_18" model="gastrointestinal.symptomology">
+            <field name="name">Strong stool Odor</field>
+        </record>
+        <record id="recor_19" model="gastrointestinal.symptomology">
+            <field name="name">Vomiting</field>
+        </record>
+
+        <!-- Endocrine/Metabolic -->
+        <record id="record_1" model="endocrine_metabolic.symptomology">
+            <field name="name">Diabetes</field>
+        </record>
+        <record id="record_2" model="endocrine_metabolic.symptomology">
+            <field name="name">Hypothyroidism</field>
+        </record>
+        <record id="record_3" model="endocrine_metabolic.symptomology">
+            <field name="name">Hyperthyroidism</field>
+        </record>
+        <record id="record_4" model="endocrine_metabolic.symptomology">
+            <field name="name">PCOS</field>
+        </record>
+        <record id="record_5" model="endocrine_metabolic.symptomology">
+            <field name="name">Infertility</field>
+        </record>
+        <record id="record_6" model="endocrine_metabolic.symptomology">
+            <field name="name">Insulin Resistance</field>
+        </record>
+        <record id="record_7" model="endocrine_metabolic.symptomology">
+            <field name="name">Excessive Weight Gain</field>
+        </record>
+        <record id="record_8" model="endocrine_metabolic.symptomology">
+            <field name="name">Excessive Weight Loss</field>
+        </record>
+        <record id="record_9" model="endocrine_metabolic.symptomology">
+            <field name="name">Hypoglycemia</field>
+        </record>
+
+        <!-- Emotional -->
+        <record id="emotional_1" model="emotional.symptomology">
+            <field name="name">Anxiety</field>
+        </record>
+        <record id="emotional_2" model="emotional.symptomology">
+            <field name="name">Disordered Eating Patterns</field>
+        </record>
+        <record id="emotional_3" model="emotional.symptomology">
+            <field name="name">Difficulty making decisions</field>
+        </record>
+        <record id="emotional_4" model="emotional.symptomology">
+            <field name="name">Depression</field>
+        </record>
+        <record id="emotional_5" model="emotional.symptomology">
+            <field name="name">Irritability</field>
+        </record>
+        <record id="emotional_6" model="emotional.symptomology">
+            <field name="name">Poor Concentration</field>
+        </record>
+        <record id="emotional_7" model="emotional.symptomology">
+            <field name="name">Sleep Disturbances</field>
+        </record>
+
+        <!-- Urinary -->
+        <record id="urinary_1" model="urinary.symptomology">
+            <field name="name">Bed Wetting</field>
+        </record>
+        <record id="urinary_2" model="urinary.symptomology">
+            <field name="name">Frequent Yeast Infections</field>
+        </record>
+        <record id="urinary_3" model="urinary.symptomology">
+            <field name="name">Hesitancy</field>
+        </record>
+        <record id="urinary_4" model="urinary.symptomology">
+            <field name="name">Infection</field>
+        </record>
+        <record id="urinary_5" model="urinary.symptomology">
+            <field name="name">Interstitial Cystitis</field>
+        </record>
+        <record id="urinary_6" model="urinary.symptomology">
+            <field name="name">Kidney Disease</field>
+        </record>
+        <record id="urinary_7" model="urinary.symptomology">
+            <field name="name">Kidney Stone</field>
+        </record>
+        <record id="urinary_8" model="urinary.symptomology">
+            <field name="name">Leaking/Incontinence</field>
+        </record>
+        <record id="urinary_9" model="urinary.symptomology">
+            <field name="name">Pain/Burning</field>
+        </record>
+        <record id="urinary_10" model="urinary.symptomology">
+            <field name="name">Prostate Enlargement</field>
+        </record>
+    </data>
+</odoo>
