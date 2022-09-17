@@ -19,7 +19,7 @@ class Guest(models.Model):
     guest_to_invoice = fields.Boolean("To invoice", compute='_compute_guest_to_invoice', search='_search_guest_to_invoice',)
     customer_id = fields.Many2one('reception.customer', string='Customer')
     test_ids = fields.One2many('lab.test','guest_id',string="Lab Tests")
-    prescription_ids = fields.One2many('prescription.prescription','prescription_id',string="Prescriptions")
+    prescription_ids = fields.One2many('prescription.prescription','guest_id',string="Prescriptions")
     
 
     def add_to_operation(self):
