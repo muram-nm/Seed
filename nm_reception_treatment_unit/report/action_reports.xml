@@ -12,5 +12,25 @@
             <field name="binding_type">report</field>
         </record>
 
+        <record id="action_lab_test_report" model="ir.actions.report">
+            <field name="name">Print Lab Test</field>
+            <field name="model">lab.test</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">nm_reception_treatment_unit.report_lab_test_document</field>
+            <field name="report_file">nm_reception_treatment_unit.report_lab_test_document</field>
+            <field name="binding_model_id" ref="model_lab_test"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_prescription_report" model="ir.actions.report">
+            <field name="name">Print Prescription</field>
+            <field name="model">prescription.prescription</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">nm_reception_treatment_unit.report_prescription_document</field>
+            <field name="report_file">nm_reception_treatment_unit.report_prescription_document</field>
+            <field name="binding_model_id" ref="model_prescription_prescription"/>
+            <field name="binding_type">report</field>
+        </record>
+
     </data>
 </odoo>

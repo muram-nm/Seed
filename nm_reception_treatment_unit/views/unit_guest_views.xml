@@ -70,6 +70,21 @@
                 <attribute name="invisible">True</attribute>
                 
             </field>
+
+            <xpath expr="//notebook/page[@name='description_page']" position="after">
+                <page string="Lab Tests">
+                    <button name="add_to_operation" type="object" string="Add To Operation"
+                   />
+                    <field name="test_ids" context="{'default_customer_id':customer_id,}">
+                        <tree>
+                            <field name="date"/>
+                            <field name="lab_test_type"/>
+                            <field name="test_id"/>
+                            <field name="is_paid"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
         </field>
     </record>
 

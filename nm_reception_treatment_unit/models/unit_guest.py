@@ -18,8 +18,21 @@ class Guest(models.Model):
     invoice_count = fields.Integer("Number of invoices", related='reception_order_id.invoice_count')
     guest_to_invoice = fields.Boolean("To invoice", compute='_compute_guest_to_invoice', search='_search_guest_to_invoice',)
     customer_id = fields.Many2one('reception.customer', string='Customer')
+    test_ids = fields.One2many('lab.test','guest_id',string="Lab Tests")
+    prescription_ids = fields.One2many('prescription.prescription','prescription_id',string="Prescriptions")
+    
 
-
+    def add_to_operation(self):
+        if self.reception_order_id:
+            for test in self.test_ids:
+                self.env['reception.order.line'].create({
+                    'product_id': test.test_id.id,
+                    'price_unit': 0.0,
+                    'product_uom_qty': 1.0,
+                    'reception_order_id':self.reception_order_id.id,
+                })
+        else:
+            raise ValidationError(_('There are no reception order for this guest'))
 
     @api.depends('commercial_partner_id', 'reception_line_id.order_partner_id.commercial_partner_id', 'unit_id.reception_line_id')
     def _compute_sale_line(self):

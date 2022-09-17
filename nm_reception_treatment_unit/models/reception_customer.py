@@ -17,11 +17,16 @@ class ReceptionCustomer(models.Model):
 	guest_ids = fields.One2many('unit.guest','partner_id',string="Guests")
 	total_guests = fields.Integer(compute='compute_total')
 	total_forms = fields.Integer(compute='compute_total')
+	total_tests = fields.Integer(compute='compute_total')
+	total_prescriptions = fields.Integer(compute='compute_total')
 
 	def compute_total(self):
 		for rec in self:
 			rec.total_guests = len(rec.guest_ids)
 			rec.total_forms = self.env['intake.form'].search_count([('partner_id','=',rec.id)])
+			rec.total_tests = self.env['lab.test'].search_count([('customer_id','=',rec.id)])
+			rec.total_prescriptions = self.env['prescription.prescription'].search_count([('customer_id','=',rec.id)])
+
 
 	def action_view_guests(self):
 		self.ensure_one()
@@ -59,7 +64,27 @@ class ReceptionCustomer(models.Model):
 			'context':{'default_partner_id': self.id,'create':0},
 		}
 
+	def action_view_tests(self):
+		self.ensure_one()
+		return {
+			'type': 'ir.actions.act_window',
+			'name': _('Lab Tests'),
+			'res_model': 'lab.test',
+			'view_mode': 'list,form',
+			'domain': [('customer_id', '=', self.id)],
+			'context':{'default_customer_id': self.id,'create':0},
+		}
 
+	def action_view_prescriptions(self):
+		self.ensure_one()
+		return {
+			'type': 'ir.actions.act_window',
+			'name': _('Prescriptions'),
+			'res_model': 'prescription.prescription',
+			'view_mode': 'list,form',
+			'domain': [('customer_id', '=', self.id)],
+			'context':{'default_customer_id': self.id,'create':0},
+		}
 
 	# guests_ids = fields.One2many('unit.guest', 'partner_id',string='Customer')
 

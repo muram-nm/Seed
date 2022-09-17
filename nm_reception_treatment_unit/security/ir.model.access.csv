@@ -11,3 +11,5 @@ acl_gastrointestinal_symptomology,gastrointestinal_symptomology,model_gastrointe
 acl_endocrine_metabolic_symptomology,endocrine_metabolic_symptomology,model_endocrine_metabolic_symptomology,,1,1,1,1
 acl_emotional_symptomology,emotional_symptomology,model_emotional_symptomology,,1,1,1,1
 acl_urinary_symptomology,urinary_symptomology,model_urinary_symptomology,,1,1,1,1
+access_lab_test,lab_test.lab_test,model_lab_test,,1,1,1,1
+access_prescription_prescription,prescription.prescription,model_prescription_prescription,,1,1,1,1

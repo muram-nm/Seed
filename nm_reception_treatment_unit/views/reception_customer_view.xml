@@ -11,14 +11,24 @@
                 <!-- smart button for history -->
                 <xpath expr="//div[@name='button_box']" position="inside">
                     <button class="oe_stat_button" type="object"
+                        name="action_get_intake_form"
+                        icon="fa-pencil-square-o">
+                        <field string="Intake Forms" name="total_forms" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object"
                         name="action_view_guests"
                         icon="fa-list">
                         <field string="History" name="total_guests" widget="statinfo"/>
                     </button>
                     <button class="oe_stat_button" type="object"
-                        name="action_get_intake_form"
-                        icon="fa-pencil-square-o">
-                        <field string="Intake Forms" name="total_forms" widget="statinfo"/>
+                        name="action_view_tests"
+                        icon="fa-list">
+                        <field string="Lab Tests" name="total_tests" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object"
+                        name="action_view_prescriptions"
+                        icon="fa-list">
+                        <field string="Prescriptions" name="total_prescriptions" widget="statinfo"/>
                     </button>
                 </xpath>
 

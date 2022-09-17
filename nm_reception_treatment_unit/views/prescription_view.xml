@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="prescription_tree_view" model="ir.ui.view">
+			<field name="name">prescription.prescription.tree</field>
+			<field name="model">prescription.prescription</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="date"/>
+					<field name="customer_id"/>
+					<field name="guest_id"/>                    
+                    <field name="prescription_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_prescription" model="ir.ui.view">
+	        <field name="name">prescription.prescription.form</field>
+	        <field name="model">prescription.prescription</field>
+	        <field eval="2" name="priority"/>
+	        <field name="arch" type="xml">
+	            <form string="Prescriptions">
+	            	<sheet>
+	            		<group>
+	                    	<group>
+	                    		<field name="customer_id" invisible="1"/>
+	                    		<field name="guest_id" invisible="1"/>
+	                    		<field name="prescription_id"/>
+	                        </group>
+	                        <group>
+	                        	<field name="date" invisible="1"/>
+	                        	<field name="order_id"/>
+	                        </group>
+	                    </group>
+	                    <group>
+	                    	<field name="description"/>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+
+	    <record id="prescription_search_view" model="ir.ui.view">
+            <field name="name">prescription.prescription.search</field>
+            <field name="model">prescription.prescription</field>
+            <field name="arch" type="xml">
+                <search string="Search Lab Test">
+					<field name="customer_id"/>
+					<field name="guest_id"/>
+                    <field name="order_id"/>
+                    <field name="prescription_id"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_customer" string="Customer" context="{'group_by':'customer_id'}"/>
+                        <filter name="group_order" string="Order" context="{'group_by':'order_id'}"/>
+                        <filter name="group_date" string="Date" context="{'group_by':'date'}"/>
+                        <filter name="group_prescription" string="Prescription" context="{'group_by':'prescription_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_prescription" model="ir.actions.act_window">
+			<field name="name">Prescriptions</field>
+			 <field name="res_model">prescription.prescription</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem 
+			id="menu_prescription"
+			action="action_prescription"
+			parent="nm_health_wellness_reception_sales.menu_wellness_reception_main"
+			sequence="4"/>
+	</data>
+</odoo>

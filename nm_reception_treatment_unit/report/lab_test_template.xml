@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_lab_test_document" >
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h3>
+                            <center>Lab Test</center>
+                        </h3>
+                        <br/>
+                        <table class="table">
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Sequence:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.sequence"></span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;">Date:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.date"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Customer:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;" t-esc="o.customer_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Test Type:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.lab_test_type.name"></span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;">Test:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.test_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Guest:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.guest_id.name"></span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;">Is Paid:</span>
+                                </td>
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.is_paid"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                        <table class="table table-bordered">
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Description:</span>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.description"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Result:</span>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.result"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Normal Range:</span>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.normal_range"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;">Sample Type:</span>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td>
+                                    <span style="font-weight: bold;" t-esc="o.sample_type"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

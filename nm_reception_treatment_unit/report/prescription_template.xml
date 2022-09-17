@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_prescription_document" >
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h3>
+                            <center>Prescription</center>
+                        </h3>
+                        <br/>
+                        <table class="table">
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;width:25%;">Date:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;width:25%;" t-esc="o.date"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;width:25%;">Customer:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;" t-esc="o.customer_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;width:25%;">Guest:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;width:25%;" t-esc="o.guest_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;width:25%;">Prescription:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;width:25%;" t-esc="o.prescription_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;width:25%;">Order:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;width:25%;" t-esc="o.order_id.name"></span>
+                                </td>
+                            </tr>
+                            <tr class="text-left">
+                                <td>
+                                    <span style="font-weight: bold;width:25%;">Description:</span>
+                                </td>
+                                <td colspan="3">
+                                    <span style="font-weight: bold;" t-esc="o.description"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
