@@ -8,6 +8,15 @@ class UnitGuestStage(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
 
+    intake_form = fields.Boolean("Intake Form")
+    consent_for = fields.Boolean("Consent Form")
+    vital_signs = fields.Boolean("Vital Signs")
+    assessments = fields.Boolean("Assessments")
+    lab_test = fields.Boolean("Lab Test")
+    prescription = fields.Boolean("Prescription")     
+    user_ids = fields.Many2many('res.users',string='Users')
+    capacity = fields.Integer('Capacity')
+
     def _get_default_unit_ids(self):
         default_unit_id = self.env.context.get('default_unit_id')
         return [default_unit_id] if default_unit_id else None

@@ -26,4 +26,8 @@
         "report/templates.xml",
         "report/reports.xml",
     ],
+
+    "installable": True,
+    "auto_install": True,
+    "application": True,
 }

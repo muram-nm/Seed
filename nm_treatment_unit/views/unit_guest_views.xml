@@ -36,7 +36,7 @@
                         <filter string="Stage" name="stage" context="{'group_by': 'stage_id'}"/>
                         <filter string="Personal Stage" name="personal_stage" context="{'group_by': 'personal_stage_type_ids'}"/>
                         <filter string="Assignees" name="user" context="{'group_by': 'user_ids'}"/>
-                        <filter string="Unit" name="unit" context="{'group_by': 'unit_id'}"/>
+                        <filter string="Unit" name="unit_id" context="{'group_by': 'unit_id'}"/>
                         <filter string="Customer" name="customer" context="{'group_by': 'partner_id'}"/>
                         <filter string="Kanban State" name="kanban_state" context="{'group_by': 'kanban_state'}"/>
                         <filter string="Deadline" name="date_deadline" context="{'group_by': 'date_deadline'}"/>
@@ -66,7 +66,8 @@
         <field name="name">unit.guest.kanban</field>
         <field name="model">unit.guest</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create"
+            <!-- <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create" -->
+            <kanban default_group_by="unit_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
                 quick_create_view="nm_treatment_unit.quick_create_guest_form" examples="project" js_class="project_task_kanban" sample="1">
                 <field name="color"/>
                 <field name="priority"/>
@@ -142,11 +143,6 @@
                                 <div class="oe_kanban_bottom_left">
                                     <field name="priority" widget="priority"/>
                                     <field name="activity_ids" widget="kanban_activity"/>
-                                    <!-- <b t-if="record.rating_ids.raw_value.length">
-                                        <span style="font-weight:bold;" class="fa fa-fw mt4 fa-smile-o text-success" t-if="record.rating_last_value.value == 5" title="Latest Rating: Satisfied" role="img" aria-label="Happy face"/>
-                                        <span style="font-weight:bold;" class="fa fa-fw mt4 fa-meh-o text-warning" t-if="record.rating_last_value.value == 3" title="Latest Rating: Okay" role="img" aria-label="Neutral face"/>
-                                        <span style="font-weight:bold;" class="fa fa-fw mt4 fa-frown-o text-danger" t-if="record.rating_last_value.value == 1" title="Latest Rating: Dissatisfied" role="img" aria-label="Sad face"/>
-                                    </b> -->
                                 </div>
                                 <div class="oe_kanban_bottom_right" t-if="!selection_mode">
                                     <field name="kanban_state" widget="state_selection" groups="base.group_user" invisible="context.get('fsm_mode', False)"/>
@@ -212,10 +208,7 @@
                             groups="base.group_no_one" 
                             invisible="1"
                         />
-                        <!-- <field name="parent_id"
-                            attrs="{'invisible' : [('allow_subtasks', '=', False)]}"
-                            groups="base.group_no_one"
-                        /> -->
+                      
                     </group>
                     <group>
                         <field name="active" invisible="1"/>
@@ -227,37 +220,14 @@
                         <field name="legend_blocked" invisible="1"/>
                         <field name="legend_normal" invisible="1"/>
                         <field name="legend_done" invisible="1"/>
+                         <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" invisible="1"/>
                     </group>
                 </group>
                 <notebook>
                     <page name="description_page" string="Description">
                         <field name="description" type="html" options="{'collaborative': true}"/>
                     </page>
-                    <page name="extra_info" string="Extra Info" groups="base.group_no_one">
-                        <group>
-                            <group>
-                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting" context="{'default_partner_id': partner_id}"/>
-                                <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" widget="many2many_tags"/>
-                                <field name="sequence" groups="base.group_no_one"/>
-                                <field name="email_from" invisible="1"/>
-                                <field name="email_cc" groups="base.group_no_one"/>
-                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
-                                <field name="displayed_image_id" groups="base.group_no_one" options="{'no_create': True}"/>
-                            </group>
-                            <group>
-                                <field name="date_assign" groups="base.group_no_one"/>
-                                <field name="date_last_stage_update" groups="base.group_no_one"/>
-                            </group>
-                            <group string="Working Time to Assign" attrs="{'invisible': [('working_hours_open', '=', 0.0)]}">
-                                <field name="working_hours_open" string="Hours"/>
-                                <field name="working_days_open" string="Days"/>
-                            </group>
-                            <group string="Working Time to Close" attrs="{'invisible': [('working_hours_close', '=', 0.0)]}">
-                                <field name="working_hours_close" string="Hours"/>
-                                <field name="working_days_close" string="Days"/>
-                            </group>
-                        </group>
-                    </page>
+                   
                 </notebook>
                 </sheet>
                 <div class="oe_chatter">
@@ -366,7 +336,10 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Vital Signs">
+                        <page name="description" string="Description">
+                            <field name="description" type="html" options="{'collaborative': true}"/>
+                        </page>
+                        <page name="vital_signs" string="Vital Signs">
                             <group>
                                 <group>
                                     <field name="blood_pressure"/>
@@ -376,14 +349,13 @@
                                     <field name="spo"/>
                                 </group>
                                 <group>
-                                
+                                <field name="company_id" invisible="1"/>
+
                                 </group>
                             </group>
                         </page>
-                        <page name="description_page" string="Description">
-                            <field name="description" type="html" options="{'collaborative': true}"/>
-                        </page>
-                        <page name="extra_info" string="Extra Info" groups="base.group_no_one">
+                       
+                        <!-- <page name="extra_info" string="Extra Info" groups="base.group_no_one">
                             <group>
                                 <group>
                                     <field name="analytic_account_id" groups="analytic.group_analytic_accounting" context="{'default_partner_id': partner_id}"/>
@@ -407,7 +379,7 @@
                                     <field name="working_days_close" string="Days"/>
                                 </group>
                             </group>
-                        </page>
+                        </page> -->
                     </notebook>
                     </sheet>
                     <div class="oe_chatter">

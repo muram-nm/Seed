@@ -69,7 +69,7 @@
 		<menuitem 
 			id="menu_prescription"
 			action="action_prescription"
-			parent="nm_health_wellness_reception_sales.menu_wellness_reception_main"
-			sequence="4"/>
+			parent="nm_treatment_unit.menu_treatment_unit_root"
+			sequence="25"/>
 	</data>
 </odoo>

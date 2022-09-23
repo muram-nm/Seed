@@ -8,8 +8,9 @@
 				<tree>
 					<field name="date"/>
 					<field name="sequence"/>
-					<field name="lab_test_type"/>
-                    <field name="test_id"/>
+					<field name="lab_test_type" 
+					/>
+                    <field name="test_id" />
                     <field name="customer_id"/>
                     <field name="is_paid"/>
 				</tree>
@@ -24,21 +25,26 @@
 	            <form string="Lab Test">
 	            	<sheet>
 	            		<div class="oe_title">
-	            			<label for="customer_id" class="oe_edit_only"/>
+	            			<label for="sequence" class="oe_edit_only" string="Sequence"/>
 	            			<h1>
-	            				<field name="customer_id"/>
+								<h1>
+									<field name="sequence" readonly="1"/>
+								</h1>
 	            			</h1>
 	                    </div>
 	                    <group>
 	                    	<group>
-	                    		<field name="sequence"/>
-	                            <field name="lab_test_type"/>
-	                            <field name="test_id" domain="[('product_tmpl_id','=',lab_test_type)]"/>
+	                    		
+	                            <field name="lab_test_type" 
+									options="{'no_create_edit': True,'no_create':True}"/>
+	                            <field name="test_id" 
+									options="{'no_create_edit': True,'no_create':True}" domain="[('product_tmpl_id','=',lab_test_type)]"/>
 	                        </group>
 	                        <group>
 	                        	<field name="date"/>
 	                        	<field name="guest_id"/>
 	                        	<field name="order_id"/>
+								<field name="customer_id"/>
 		                        <field name="is_paid"/>
 	                        </group>
 	                    </group>

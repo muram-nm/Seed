@@ -40,9 +40,10 @@
                 'website.assets_wysiwyg':  [
                     'nm_health_wellness_website/static/src/css/website.css',
                 ],
-    }
-    # only loaded in demonstration mode
-    # 'demo': [
-    #     'demo/demo.xml',
-    # ],
+    },
+    "installable": True,
+    "auto_install": True,
+    "application": True,
+   
+   
 }

@@ -7,7 +7,7 @@ class Prescription(models.Model):
 	_inherit = ['mail.thread', 'mail.activity.mixin']
 	_rec_name = 'prescription_id' 
 
-	date = fields.Date(default=fields.Date.today())
+	date = fields.Date(default=fields.Date.today(),required=True)
 	customer_id = fields.Many2one('reception.customer')
 	guest_id = fields.Many2one('unit.guest')
 	prescription_id = fields.Many2one('product.product',required=True,

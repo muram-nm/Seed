@@ -2,17 +2,7 @@
 <odoo>
 	 <data>
 
-        <!--Top Menu-->
-         <menuitem id="menu_wellness_reception_main"
-				   name="Reception"
-                   web_icon="nm_health_wellness_reception_sales,static/description/icon.png"
-				   sequence="15"/>
-		    <menuitem id="menu_configuration"
-				   groups="nm_health_wellness_reception_sales.wellness_reception_admin"
-				   parent="menu_wellness_reception_main"
-				   name="Configuration"
-				   sequence="3"/>
-
+     
 
 		 <record id="reception_customer_form_view" model="ir.ui.view">
             <field name="name">reception.customer.form</field>
@@ -165,9 +155,7 @@
                                 <t t-else="">
                                     <div class="o_kanban_image_fill_left o_kanban_image_full" t-attf-style="background-image: url(#{kanban_image('res.partner', 'avatar_128', record.id.raw_value)})" role="img"/>
                                 </t>
-<!--                                <div class="o_kanban_image_fill_left d-none d-md-block"  role="img">-->
-<!--                                    <field name="image_1920" widget='html' class="oe_avatar" options='{"preview_image": "image_128"}'/>-->
-<!--                                </div>-->
+
                                 <div class="oe_kanban_details d-flex flex-column">
                                     <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
                                     <strong class="o_kanban_record_title oe_partner_heading"><field name="customer_no"/></strong>

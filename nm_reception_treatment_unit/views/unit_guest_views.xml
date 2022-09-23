@@ -71,22 +71,24 @@
                 
             </field>
 
-            <xpath expr="//notebook/page[@name='description_page']" position="after">
+            <xpath expr="//notebook/page[@name='vital_signs']" position="after">
                 <page string="Lab Tests">
-                    <button name="add_to_operation" type="object" string="Add To Operation"
+                    <button name="add_to_operation" type="object" string="Add To Operation" class="oe_highlight" icon="fa-plus"
                    />
                     <field name="test_ids" context="{'default_customer_id':customer_id,}">
-                        <tree>
+                        <tree editable="bottom" >
                             <field name="date"/>
                             <field name="lab_test_type"/>
-                            <field name="test_id"/>
+                            <field name="test_id" domain="[('product_tmpl_id','=',lab_test_type)]"/>
+                            <field name="note"/>
+                            <field name="is_added" invisible="1"/>
                             <field name="is_paid"/>
                         </tree>
                     </field>
                 </page>
                 <page string="Prescriptions">
-                    <field name="prescription_ids" context="{'default_customer_id':customer_id,'default_order_id':reception_order_id}">
-                        <tree>
+                    <field name="prescription_ids" context="{'default_customer_id':customer_id,'default_order_id':reception_order_id}" >
+                        <tree editable="bottom">
                             <field name="date"/>
                             <field name="prescription_id"/>
                             <field name="description"/>
@@ -106,6 +108,9 @@
                 <attribute name="options">{"no_create": True}</attribute>
                 <attribute name="readonly">0</attribute>
             </xpath>
+            <field name="user_ids" position="after">
+                <field name="reception_order_id"/>
+            </field>
         </field>
         <!-- <field name="groups_id" eval="[(4, ref('receptions_team.group_reception_receptionsman'))]"/> -->
     </record>

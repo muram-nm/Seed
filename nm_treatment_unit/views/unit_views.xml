@@ -175,6 +175,10 @@
                                                 <div role="menuitem" class="o_kanban_card_manage_title">
                                                     <span>View</span>
                                                 </div>
+                                                <div>
+                                                     <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                                </div>
+                                              
                                                 <div role="menuitem">
                                                     <a name="action_view_guests" type="object">Guests</a>
                                                 </div>
@@ -560,13 +564,13 @@
         parent="nm_treatment_unit.menu_configuration" 
         sequence="1"/>
 
-      <menuitem
+      <!-- <menuitem
         id="menu_treatment_unit"
         name="Units"
         action="action_treatment_unit"
         parent="nm_treatment_unit.menu_treatment_unit_root"
         sequence="10"/>
-  
+   -->
 
     <!-- Reporting menus -->
     <!-- <menuitem id="menu_unit_report" name="Reporting"

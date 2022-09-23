@@ -6,6 +6,7 @@
         id="menu_treatment_unit_root"
         name="Treatment Unit"
         web_icon="nm_treatment_unit,static/description/icon.png"
+        sequence="20"
         />
   
     <menuitem id="menu_configuration"

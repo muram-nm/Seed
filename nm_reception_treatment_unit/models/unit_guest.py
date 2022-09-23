@@ -9,7 +9,7 @@ from ast import literal_eval
 class Guest(models.Model):
     _inherit = 'unit.guest'
 
-    reception_order_id = fields.Many2one('reception.order', 'reception Order', help="receptions order to which the guest is linked.")
+    reception_order_id = fields.Many2one('reception.order', 'Order', help="receptions order to which the guest is linked.")
     reception_line_id = fields.Many2one(
         'reception.order.line', 'receptions Order Item',
         help="receptions order item to which the unit is linked. Link the timesheet entry to the receptions order item defined on the unit. "
@@ -23,17 +23,19 @@ class Guest(models.Model):
     
 
     def add_to_operation(self):
-        if self.reception_order_id:
-            for test in self.test_ids:
+        for test in self.test_ids:
+            if not test.is_added:
                 self.env['reception.order.line'].create({
+                    'name':test.test_id.name,
                     'product_id': test.test_id.id,
                     'price_unit': 0.0,
+                    'product_uom':test.test_id.uom_id.id,
                     'product_uom_qty': 1.0,
+                    'guest_id':self.id,
                     'reception_order_id':self.reception_order_id.id,
                 })
-        else:
-            raise ValidationError(_('There are no reception order for this guest'))
-
+                test.is_added = True
+        
     @api.depends('commercial_partner_id', 'reception_line_id.order_partner_id.commercial_partner_id', 'unit_id.reception_line_id')
     def _compute_sale_line(self):
         for guest in self:
