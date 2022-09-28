@@ -13,12 +13,7 @@ class ProductTemplate(models.Model):
 
     unit_id = fields.Many2one(
         'unit.unit', 'Unit', company_dependent=True,
-        help='Select a billable unit on which guest can be created. This setting must be set for each company.',
- 
-    )
-        
-        
-     
+        help='Select a billable unit on which guest can be created. This setting must be set for each company.')
     unit_template_id = fields.Many2one(
         'unit.unit', 'Unit Template', company_dependent=True, copy=True,
         domain="[('company_id', '=', current_company_id)]",

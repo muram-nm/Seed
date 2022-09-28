@@ -18,9 +18,37 @@ class Guest(models.Model):
     invoice_count = fields.Integer("Number of invoices", related='reception_order_id.invoice_count')
     guest_to_invoice = fields.Boolean("To invoice", compute='_compute_guest_to_invoice', search='_search_guest_to_invoice',)
     customer_id = fields.Many2one('reception.customer', string='Customer')
-    test_ids = fields.One2many('lab.test','guest_id',string="Lab Tests")
-    prescription_ids = fields.One2many('prescription.prescription','guest_id',string="Prescriptions")
+    test_ids = fields.One2many('unit.labtest','guest_id',string="Lab Tests")
+    treatmentplan_ids = fields.One2many('unit.treatmentplan','guest_id',string="Treatment Plans")
+    vital_signs = fields.Boolean("Vital Signs",related='stage_id.vital_signs')
+    lab_test = fields.Boolean("Lab Test",related='stage_id.lab_test')
+    prescription = fields.Boolean("Prescription",related='stage_id.prescription')
+    treatment_plan = fields.Boolean('Treatment Plan',related='stage_id.treatment_plan') 
+    diagnosis = fields.Text(tracking=True)
+    core_objectives = fields.Text(tracking=True)
+    height = fields.Float(tracking=True)
+    weight = fields.Float(tracking=True)
+    bmi = fields.Float(compute="_calc_bmi",tracking=True)
+    prescription_ids = fields.One2many('unit.prescription','guest_id')
+
+    # Life style plan
+    avoid = fields.Text(tracking=True)
+    introduce = fields.Text(tracking=True)
+    increase = fields.Text(tracking=True)
+    type = fields.Text(tracking=True)
+    intensity = fields.Text(tracking=True)
+    frequency = fields.Text(tracking=True)
+    duration = fields.Float(tracking=True)
+    sleep = fields.Text(tracking=True)
+    stress_management = fields.Text(tracking=True)
+    emotional_spiritual = fields.Text(tracking=True)
     
+    @api.depends('height','weight')
+    def _calc_bmi(self):
+        for rec in self:
+            rec.bmi = 0.0
+            if rec.height > 0.0 and rec.weight > 0.0:
+                rec.bmi = (rec.weight / rec.height) ** 2
 
     def add_to_operation(self):
         for test in self.test_ids:

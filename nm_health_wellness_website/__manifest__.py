@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Health Wellness Website",
+    'name': "NM - Health Wellness Website",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as

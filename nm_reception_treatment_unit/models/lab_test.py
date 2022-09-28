@@ -2,7 +2,7 @@
 from odoo import api, fields, models, _
 
 class LabTest(models.Model):
-	_name = 'lab.test'
+	_name = 'unit.labtest'
 	_description = 'Lab Test'
 	_inherit = ['mail.thread', 'mail.activity.mixin']
 	_rec_name = 'sequence' 
@@ -28,6 +28,6 @@ class LabTest(models.Model):
 
 	@api.model
 	def create(self, vals):
-		vals['sequence'] = self.env['ir.sequence'].next_by_code('lab.test') or '/'
+		vals['sequence'] = self.env['ir.sequence'].next_by_code('unit.labtest') or '/'
 		res = super(LabTest, self).create(vals)
 		return res

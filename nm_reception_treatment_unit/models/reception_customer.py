@@ -14,18 +14,24 @@ from odoo.tools.sql import column_exists, create_column
 class ReceptionCustomer(models.Model):
 	_inherit = 'reception.customer'
 
-	guest_ids = fields.One2many('unit.guest','partner_id',string="Guests")
+	guest_ids = fields.One2many('unit.guest','customer_id',string="Guests")
 	total_guests = fields.Integer(compute='compute_total')
 	total_forms = fields.Integer(compute='compute_total')
 	total_tests = fields.Integer(compute='compute_total')
-	total_prescriptions = fields.Integer(compute='compute_total')
+	total_treatmentplans = fields.Integer(compute='compute_total')
+	order_ids = fields.One2many('reception.order','customer_id')
+	intakeform_ids = fields.One2many('unit.intakeform','customer_id')
+	relative_ids = fields.One2many('reception.relative','customer_id')
+	labtest_ids = fields.One2many('unit.labtest','customer_id')
+	treatmentplan_ids = fields.One2many('unit.treatmentplan','customer_id')
+
 
 	def compute_total(self):
 		for rec in self:
 			rec.total_guests = len(rec.guest_ids)
-			rec.total_forms = self.env['intake.form'].search_count([('partner_id','=',rec.id)])
-			rec.total_tests = self.env['lab.test'].search_count([('customer_id','=',rec.id)])
-			rec.total_prescriptions = self.env['prescription.prescription'].search_count([('customer_id','=',rec.id)])
+			rec.total_forms = len(rec.intakeform_ids)
+			rec.total_tests = len(rec.labtest_ids)
+			rec.total_treatmentplans = len(rec.treatmentplan_ids)
 
 
 	def action_view_guests(self):
@@ -34,23 +40,23 @@ class ReceptionCustomer(models.Model):
 			'type': 'ir.actions.act_window',
 			'name': _('Guests'),
 			'res_model': 'unit.guest',
-			'view_mode': 'tree,pivot,graph',
+			'view_mode': 'list,pivot,graph',
 			'search_view_id': self.env.ref('nm_treatment_unit.view_guest_search_form').id,
 			'domain': [('partner_id', '=', self.id)],
 			'context':{'default_partner_id': self.id,'create':0}
 		}
 
 	def action_create_intake_form(self):
-		if self.env['intake.form'].search_count([('partner_id','=',self.id)]) > 0:
+		if self.total_forms > 0:
 			raise ValidationError(_('This Customer already have a form'))
 		return {
 			'type': 'ir.actions.act_window',
 			'name': _('Intake Form'),
-			'res_model': 'intake.form',
-			'view_mode': 'form',
+			'res_model': 'unit.intakeform',
+			'view_mode': 'list,form',
 			'view_id': self.env.ref('nm_reception_treatment_unit.view_intake_form').id,
-			'domain': [('partner_id', '=', self.id)],
-			'context':{'default_partner_id': self.id},
+			'domain': [('customer_id', '=', self.id)],
+			'context':{'default_customer_id': self.id},
 		}
 
 	def action_get_intake_form(self):
@@ -58,10 +64,10 @@ class ReceptionCustomer(models.Model):
 		return {
 			'type': 'ir.actions.act_window',
 			'name': _('Intake Form'),
-			'res_model': 'intake.form',
+			'res_model': 'unit.intakeform',
 			'view_mode': 'list,form',
-			'domain': [('partner_id', '=', self.id)],
-			'context':{'default_partner_id': self.id,'create':0},
+			'domain': [('customer_id', '=', self.id)],
+			'context':{'default_customer_id': self.id,'create':0},
 		}
 
 	def action_view_tests(self):
@@ -69,18 +75,18 @@ class ReceptionCustomer(models.Model):
 		return {
 			'type': 'ir.actions.act_window',
 			'name': _('Lab Tests'),
-			'res_model': 'lab.test',
+			'res_model': 'unit.labtest',
 			'view_mode': 'list,form',
 			'domain': [('customer_id', '=', self.id)],
 			'context':{'default_customer_id': self.id,'create':0},
 		}
 
-	def action_view_prescriptions(self):
+	def action_view_treatmentplans(self):
 		self.ensure_one()
 		return {
 			'type': 'ir.actions.act_window',
-			'name': _('Prescriptions'),
-			'res_model': 'prescription.prescription',
+			'name': _('Treatment Plans'),
+			'res_model': 'unit.treatmentplan',
 			'view_mode': 'list,form',
 			'domain': [('customer_id', '=', self.id)],
 			'context':{'default_customer_id': self.id,'create':0},

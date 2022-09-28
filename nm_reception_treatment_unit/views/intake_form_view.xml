@@ -2,8 +2,8 @@
 <odoo>
 	<data>
 		<record id="view_intake_form" model="ir.ui.view">
-	        <field name="name">intake.form.form</field>
-	        <field name="model">intake.form</field>
+	        <field name="name">unit.intakeform.form</field>
+	        <field name="model">unit.intakeform</field>
 	        <field eval="2" name="priority"/>
 	        <field name="arch" type="xml">
 	            <form string="Intake Form">
@@ -11,9 +11,9 @@
 	            	</header>
 	            	<sheet>
 	            		<div class="oe_title">
-	            			<label for="partner_id" class="oe_edit_only"/>
+	            			<label for="customer_id" class="oe_edit_only"/>
 	                        <h1>
-	                        	<field name="partner_id" required="1"/>
+	                        	<field name="customer_id" required="1"/>
 	                        </h1>
 	                    </div>
 	                    <group>
@@ -330,12 +330,12 @@
 	        </field>
 	    </record>
 	    <record id="intake_form_tree_view" model="ir.ui.view">
-			<field name="name">intake.form.tree</field>
-			<field name="model">intake.form</field>
+			<field name="name">unit.intakeform.tree</field>
+			<field name="model">unit.intakeform</field>
 			<field name="arch" type="xml">
 				<tree>
 					<field name="date"/>
-					<field name="partner_id"/>
+					<field name="customer_id"/>
 					<field name="qid"/>
                     <field name="age"/>
                     <field name="email"/>
@@ -344,11 +344,11 @@
 			</field>
 		</record>
 	    <record id="intake_form_kanban_view" model="ir.ui.view">
-            <field name="name">intake.form.kanban</field>
-            <field name="model">intake.form</field>
+            <field name="name">unit.intakeform.kanban</field>
+            <field name="model">unit.intakeform</field>
             <field name="arch" type="xml">
                 <kanban class="o_kanban_mobile">
-                    <field name="partner_id"/>
+                    <field name="customer_id"/>
                     <field name="qid"/>
                     <field name="date_of_birth"/>
 	                <field name="age"/>
@@ -359,7 +359,7 @@
                     		<div t-attf-class="oe_kanban_card oe_kanban_global_click">
                     			<div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings mt4">
-                                        <strong class="o_kanban_record_title"><span><field name="partner_id"/></span></strong>
+                                        <strong class="o_kanban_record_title"><span><field name="customer_id"/></span></strong>
                                     </div>
                                     <field name="qid"/>
                                 </div>
@@ -379,11 +379,11 @@
         </record>
 
         <record id="intake_form_search_view" model="ir.ui.view">
-            <field name="name">intake.form.search</field>
-            <field name="model">intake.form</field>
+            <field name="name">unit.intakeform.search</field>
+            <field name="model">unit.intakeform</field>
             <field name="arch" type="xml">
                 <search string="Search Intake Form">
-                    <field name="partner_id"/>
+                    <field name="customer_id"/>
                     <field name="qid"/>
                 </search>
             </field>
@@ -391,15 +391,16 @@
 
         <record id="action_intake_form" model="ir.actions.act_window">
 			<field name="name">Intake Form</field>
-			 <field name="res_model">intake.form</field>
+			 <field name="res_model">unit.intakeform</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="view_mode">tree,kanban,form</field>
 		</record>
 
 		<menuitem 
 			id="menu_intake_form"
+			name="Intake Forms"
 			action="action_intake_form"
 			parent="nm_health_wellness_reception_sales.menu_reception"
-			sequence="2"/>
+			sequence="3"/>
 	</data>
 </odoo>

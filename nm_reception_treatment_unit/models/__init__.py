@@ -5,6 +5,8 @@ from . import unit
 from . import unit_guest
 from . import product
 from . import reception_customer
+from . import reception_relative
 from . import intake_form
 from . import lab_test
-from . import prescription
+from . import unit_treatmentplan
+from . import unit_prescription

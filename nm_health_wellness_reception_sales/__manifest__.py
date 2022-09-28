@@ -15,13 +15,14 @@
         "security/ir.model.access.csv",
         "data/ir_sequence_data.xml",
         "data/mail_template_data.xml",
+        "data/portal_mail_template_data.xml",
        
         "views/reception_customer_view.xml",
         "views/reception_order_view.xml",
         "views/product_view.xml",
+        'views/setting_views.xml',
 
-         "views/menu_views.xml",
-        # "views/reception_relative_view.xml",
+        "views/menu_views.xml",
         "report/layout.xml",
         "report/templates.xml",
         "report/reports.xml",

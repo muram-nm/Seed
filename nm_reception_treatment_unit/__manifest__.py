@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Reception With Treatment Unit",
+    'name': "NM - Reception With Treatment Unit",
 
     'summary': """
-        Reception With Treatment Unit""",
+        NM - Reception With Treatment Unit""",
 
     'description': """
        Reception With Treatment Unit
@@ -28,10 +28,11 @@
         'views/reception_order_views.xml',
         'views/intake_form_view.xml',
         'views/lab_test_view.xml',
-        'views/prescription_view.xml',
+        'views/unit_treatmentplan_view.xml',
         'report/intake_form_template.xml',
         'report/lab_test_template.xml',
-        'report/prescription_template.xml',
+        'report/treatmentplan_template.xml',
+        'report/guest_template.xml',
         'report/action_reports.xml',
     ],
     "installable": True,

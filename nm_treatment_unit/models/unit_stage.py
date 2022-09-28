@@ -13,7 +13,8 @@ class UnitGuestStage(models.Model):
     vital_signs = fields.Boolean("Vital Signs")
     assessments = fields.Boolean("Assessments")
     lab_test = fields.Boolean("Lab Test")
-    prescription = fields.Boolean("Prescription")     
+    prescription = fields.Boolean("Prescription")
+    treatment_plan = fields.Boolean("Treatment Plan")     
     user_ids = fields.Many2many('res.users',string='Users')
     capacity = fields.Integer('Capacity')
 

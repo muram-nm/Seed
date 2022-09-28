@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Health Care and Wellness Tratment unit for Sale",
+    'name': "NM - Health Care and Wellness Tratment unit for Sale",
 
     'summary': """
-        Health Care and Wellness Tratment unit for Sal
+        NM - Health Care and Wellness Tratment unit for Sal
         """,
 
     'description': """

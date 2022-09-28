@@ -14,7 +14,7 @@
                                     <span style="font-weight: bold;">Name:</span>
                                 </td>
                                 <td>
-                                    <span style="font-weight: bold;" t-esc="o.partner_id.name"></span>
+                                    <span style="font-weight: bold;" t-esc="o.customer_id.name"></span>
                                 </td>
                                 <td>
                                     <span style="font-weight: bold;">QID:</span>

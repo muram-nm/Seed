@@ -4,31 +4,41 @@
 
         <record id="action_intake_form_report" model="ir.actions.report">
             <field name="name">Intake Form</field>
-            <field name="model">intake.form</field>
+            <field name="model">unit.intakeform</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">nm_reception_treatment_unit.report_intake_form_document</field>
             <field name="report_file">nm_reception_treatment_unit.report_intake_form_document</field>
-            <field name="binding_model_id" ref="model_intake_form"/>
+            <field name="binding_model_id" ref="model_unit_intakeform"/>
             <field name="binding_type">report</field>
         </record>
 
         <record id="action_lab_test_report" model="ir.actions.report">
             <field name="name">Print Lab Test</field>
-            <field name="model">lab.test</field>
+            <field name="model">unit.labtest</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">nm_reception_treatment_unit.report_lab_test_document</field>
             <field name="report_file">nm_reception_treatment_unit.report_lab_test_document</field>
-            <field name="binding_model_id" ref="model_lab_test"/>
+            <field name="binding_model_id" ref="model_unit_labtest"/>
             <field name="binding_type">report</field>
         </record>
 
-        <record id="action_prescription_report" model="ir.actions.report">
-            <field name="name">Print Prescription</field>
-            <field name="model">prescription.prescription</field>
+        <record id="action_treatmentplan_report" model="ir.actions.report">
+            <field name="name">Print Treatment Plan</field>
+            <field name="model">unit.treatmentplan</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">nm_reception_treatment_unit.report_prescription_document</field>
-            <field name="report_file">nm_reception_treatment_unit.report_prescription_document</field>
-            <field name="binding_model_id" ref="model_prescription_prescription"/>
+            <field name="report_name">nm_reception_treatment_unit.report_treatmentplan_document</field>
+            <field name="report_file">nm_reception_treatment_unit.report_treatmentplan_document</field>
+            <field name="binding_model_id" ref="model_unit_treatmentplan"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_guest_report" model="ir.actions.report">
+            <field name="name">Print Guest</field>
+            <field name="model">unit.guest</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">nm_reception_treatment_unit.report_guest_document</field>
+            <field name="report_file">nm_reception_treatment_unit.report_guest_document</field>
+            <field name="binding_model_id" ref="model_unit_guest"/>
             <field name="binding_type">report</field>
         </record>
 

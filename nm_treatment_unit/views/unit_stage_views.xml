@@ -29,7 +29,7 @@
                             <!-- <field name="mail_template_id" context="{'default_model': 'project.task'}"/> -->
                             
                             <field name="sequence" groups="base.group_no_one"/>
-                           
+                            <field name="unit_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
                         <group>
                             <field name="intake_form"/>
@@ -40,7 +40,7 @@
                             <field name="prescription"/>
                             <field name="fold"/>
                             <field name="is_closed" groups="base.group_no_one"/>
-                            <field name="unit_ids" widget="many2many_tags" options="{'color_field': 'color'}" groups="base.group_no_one"/>
+                            
                             
                         </group>
                     </group>
@@ -98,20 +98,23 @@
                             <group>
                                 <field name="name"/>
                                 <field name="sequence" groups="base.group_no_one"/>
+                                <field name="unit_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                 <field name="user_ids" 
                                 widget="many2many_tags"
                                 />
                                 <field name="capacity"/>
+                                
                             </group>
                             <group>
                                 <field name="intake_form"/>
                                 <field name="consent_for"/>
                                 <field name="vital_signs"/>
+                                <field name="treatment_plan"/>
                                 <field name="assessments"/>
                                 <field name="lab_test"/>
                                 <field name="prescription"/>
                                 <field name="fold"/>
-                                
+                
                             </group>
                         </group>
                         <group>

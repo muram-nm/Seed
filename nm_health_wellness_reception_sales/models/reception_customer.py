@@ -6,6 +6,7 @@ import werkzeug
 import werkzeug.exceptions
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
+from odoo.tools import email_normalize
 
 
 class ReceptionCustomer(models.Model):
@@ -22,16 +23,21 @@ class ReceptionCustomer(models.Model):
     qid = fields.Char('QID', required=True, tracking=True)
     mobile = fields.Char(tracking=True)
     gender = fields.Selection([('male', 'Male'),
-                               ('female', 'Female')], required=True, tracking=True)
+                               ('female', 'Female')], tracking=True,default="male")
     date_of_birth = fields.Date('Date of Birth', required=True, tracking=True)
-    age = fields.Integer(compute='_compute_age', store=True, tracking=True)
+    age = fields.Integer(compute='_compute_age', tracking=True)
     qr_code = fields.Char(string="QR Code",
                           compute="_compute_qr_code", store=True)
     orders = fields.Integer(compute='_compute_orders')
     last_order_date = fields.Date(compute='_compute_last_order_date')
-    relative_ids = fields.One2many('reception.relative','partner_id')
-
     
+
+    @api.constrains('qid')
+    def check_qid(self):
+        if self.qid:
+            if not self.qid.isnumeric() or len(self.qid) != 11:
+                raise ValidationError(_('QID It must consist of 11 numbers (letters or signs are not allowed)'))
+
     @api.depends("partner_id")
     def _compute_orders(self):
         for customer in self:
@@ -78,11 +84,54 @@ class ReceptionCustomer(models.Model):
         if vals.get('customer_no', _('New')) == _('New'):
             vals['customer_no'] = self.env['ir.sequence'].next_by_code('reception.customer') or _('New')
         result = super(ReceptionCustomer, self).create(vals)
-        for customer in result:
-            template_id = self.env.ref('nm_health_wellness_reception_sales.reception_customer_creation')
-            customer.with_context(force_send=True).message_post_with_template(template_id.id)
 
+        # give portal access to the customer
+        group_portal = self.env.ref('base.group_portal')
+        group_public = self.env.ref('base.group_public')
+        for customer in result:
+            user_sudo = customer.partner_id.user_id.sudo()
+            if not user_sudo:
+                # create a user if necessary and make sure it is in the portal group
+                company = customer.partner_id.company_id or self.env.company
+                user_sudo = self.sudo().with_company(company.id)._create_user(customer)
+            if not user_sudo.active:
+                user_sudo.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
+                # prepare for the signup process
+                user_sudo.partner_id.signup_prepare()
+                self.with_context(active_test=True)._send_email(customer)
         return result
+
+    def _create_user(self,customer):
+        """ create a new user for
+            :returns record of res.users
+        """
+        return self.env['res.users'].with_context(no_reset_password=True)._create_user_from_template({
+            'email': email_normalize(customer.email),
+            'login': email_normalize(customer.email),
+            'partner_id': customer.partner_id.id,
+            'company_id': self.env.company.id,
+            'company_ids': [(6, 0, self.env.company.ids)],
+        })
+
+    def _send_email(self,customer):
+        """ send notification email to a new portal user """
+        self.ensure_one()
+
+        # determine subject and body in the portal user's language
+        template = self.env.ref('portal.mail_template_data_portal_welcome')
+        if not template:
+            raise UserError(_('The template "Portal: new user" not found for sending email to the portal user.'))
+
+        lang = customer.partner_id.user_id.sudo().lang
+        partner = customer.partner_id.user_id.sudo().partner_id
+
+        portal_url = partner.with_context(signup_force_type_in_url='', lang=lang)._get_signup_url_for_action()[partner.id]
+        partner.signup_prepare()
+
+        template.with_context(dbname=self._cr.dbname, portal_url=portal_url, lang=lang).send_mail(self.id, force_send=True)
+
+        return True
+
 
     def action_show_orders(self):
         self.ensure_one()

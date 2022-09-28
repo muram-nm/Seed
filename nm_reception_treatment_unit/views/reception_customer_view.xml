@@ -26,16 +26,44 @@
                         <field string="Lab Tests" name="total_tests" widget="statinfo"/>
                     </button>
                     <button class="oe_stat_button" type="object"
-                        name="action_view_prescriptions"
+                        name="action_view_treatmentplans"
                         icon="fa-list">
-                        <field string="Prescriptions" name="total_prescriptions" widget="statinfo"/>
+                        <field string="Treatment Plans" name="total_treatmentplans" widget="statinfo"/>
                     </button>
                 </xpath>
 
                 <xpath expr="//header" position="inside">
                     <button name="action_create_intake_form" type="object" string="Create Intake Form"/>
                 </xpath>
+
+                <xpath expr="//notebook/page[@name='other_info']" position="before">
+                    <page string="Relatives">
+                        <field name="relative_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="relation"/>
+                                <field name="date_of_birth"/>
+                                <field name="age"/>
+                                <field name="is_adult"/>
+                                <field name="medical_history"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
             </field>
         </record>
+
+        <record id="reception_customer_search_view_inherit" model="ir.ui.view">
+            <field name="name">reception.customer.inherit</field>
+            <field name="model">reception.customer</field>
+            <field name="inherit_id" ref="nm_health_wellness_reception_sales.reception_customer_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='no_mobile']" position="after">
+                    <separator/>
+                    <filter string="No Orders" domain="[('order_ids', '=', False)]" name="no_mobile"/>
+                </xpath>
+            </field>
+        </record>
+                    
     </data>
 </odoo>

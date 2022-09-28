@@ -7,19 +7,33 @@
             <field name="inherit_id" ref="nm_health_wellness_reception_sales.reception_service_form" />
             <field name="arch" type="xml">
                 <field name="service_tracking" position="before">
-                <field name="unit_id" required="1"/>              
+                <field name="unit_id" />  
+                <field name="project_id" invisible="1"/>            
             </field>
             </field>
         </record>
 
-        <record id="reception_service_tree_inherit" model="ir.ui.view">
+        <!-- <record id="reception_service_tree_inherit" model="ir.ui.view">
             <field name="name">receipton.service.tree.inherit</field>
             <field name="model">product.template</field>
             <field name="inherit_id" ref="nm_health_wellness_reception_sales.reception_service_tree" />
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                <field name="unit_id" required="1"/>              
+                <field name="unit_id" />              
             </field>
+            </field>
+        </record> -->
+
+        <record id="inherit_service_search" model="ir.ui.view">
+            <field name="name">inherit.service.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="nm_health_wellness_reception_sales.servicer_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <group expand="0" string="Group By">
+                        <filter name="unit" string="Unit" context="{'group_by':'unit_id'}"/>
+					</group>  
+                </field>
             </field>
         </record>
 

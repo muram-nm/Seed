@@ -2,7 +2,7 @@
 <odoo>
 
 
-           <!--Top Menu-->
+        <!--Top Menu-->
         <menuitem id="menu_wellness_reception_main"
                 name="Reception"
                 web_icon="nm_health_wellness_reception_sales,static/description/icon.png"
@@ -10,6 +10,7 @@
         <menuitem id="menu_configuration"
                 groups="nm_health_wellness_reception_sales.wellness_reception_admin"
                 parent="menu_wellness_reception_main"
+                action="nm_health_wellness_reception_sales.reception_config_settings_action"
                 name="Configuration"
                 sequence="3"/>
         <menuitem 
@@ -18,6 +19,7 @@
                 parent="nm_health_wellness_reception_sales.menu_wellness_reception_main"
                 sequence="1"/>
         <menuitem id="menu_reception_order"
+                name="Orders"
                 action="nm_health_wellness_reception_sales.action_reception_order"
                 parent="menu_reception"
                 sequence="1"/>
@@ -30,8 +32,9 @@
                 id="menu_reception_customer"
                 action="nm_health_wellness_reception_sales.action_reception_customer"
                 parent="menu_reception"
-                sequence="3"/>
+                sequence="2"
+                />
 
-
-
+     
+        
 </odoo>

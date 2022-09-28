@@ -15,10 +15,10 @@ class ReceptionRelatives(models.Model):
 	relation = fields.Selection([
 		('father','Father'),('mother','Mother'),
 		('brother','Brother'),('sister','Sister'),
-		('child','Child'),('wife','Wife'),
-		('husband','Husband')],tracking=True,required=True)
+		('son','Son'),('daughter','Daughter'),
+		('spouse','Spouse')],tracking=True,required=True)
 	medical_history = fields.Text(tracking=True)
-	partner_id = fields.Many2one('reception.customer')
+	customer_id = fields.Many2one('reception.customer')
 
 	@api.depends('date_of_birth')
 	def _compute_age(self):

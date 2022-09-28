@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_guest_document" >
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h3>
+                            <center><span t-esc="o.name"/></center>
+                        </h3>
+                        <div style="border: 1px solid gray;padding: 10px;border-radius: 25px;height:90px;">
+                            <div style="float:left;width:50%;" class="text-left">
+                                <span style="font-weight: bold;">Diagnosis:</span>
+                                <span style="font-weight: bold;" t-esc="o.diagnosis"/>
+                            </div>
+                            <div style="float:left;width:50%;" class="text-left">
+                                <span style="font-weight: bold;">Core Objectives:</span>
+                                <br/>
+                                <span style="font-weight: bold;" t-esc="o.core_objectives"></span>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Diet</th>
+                                <th>Exercise</th>
+                                <th>Sleep</th>
+                                <th>Stress</th>
+                                <th>Emotional/Spiritual</th>
+                            </thead>
+                            <tbody>
+                                <!-- <t t-foreach="o.life_style_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span/>
+                                        </td>
+                                        <td>
+                                            <span/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.sleep"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.stress_management"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.emotional_spiritual"/>
+                                        </td>
+                                    </tr>
+                                </t> -->
+                            </tbody>
+                        </table>
+
+                        <h5>Supplements</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Supplement Name</th>
+                                <th>On Rising</th>
+                                <th>Breakfast</th>
+                                <th>Mid-morning</th>
+                                <th>Lunch</th>
+                                <th>Mid-afternoon</th>
+                                <th>Dinner</th>
+                                <th>Prior To Bed</th>
+                                <th>Purpose</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.prescription_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="line.prescription_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.upon_arising.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.with_breakfast.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.mid_morning.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.with_lunch.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.mid_afternoon.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.with_dinner.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.prior_to_bed.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.purpose"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <h5>Treatment</h5>
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Additional Comments</th>
+                                <th>Frequency</th>
+                                <th>Session Duration</th>
+                                <th>Plan Duration</th>
+                                <th>Purpose</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="o.treatmentplan_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-esc="line.additional_comment"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.frequency"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.session_duration"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.plan_duration"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line.purpose"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr style="height:100px">
+                                    <td><strong>Additional Comments</strong></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br/>
+                        <strong>Follow up in:</strong>
+                        <br/>
+                        <strong>Recorded by:</strong>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 	 <data>
-
-     
-
 		 <record id="reception_customer_form_view" model="ir.ui.view">
             <field name="name">reception.customer.form</field>
             <field name="model">reception.customer</field>
@@ -45,39 +42,19 @@
                                     <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
                                 </div>
                                 <field name="qid" attrs="{'readonly': [('id', '!=', False)]}"/>
-                                <field name="gender"/>
+                                <field name="gender" widget="radio" options="{'horizontal':True}" required="1"/>
                                 <field name="date_of_birth"/>
-                                <field name="age"/>
+                                <field name="age" force_save="1"/>
                             </group>
                             <group>
                                 <field name="phone"/>
                                 <field name="mobile"/>
-                                <field name="email"/>
+                                <field name="email" required="1" widget="email"/>
                                 <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
                             </group>
                         </group>
                         <notebook colspan="4">
-                            <page string="Relatives">
-                                <field name="relative_ids">
-                                    <tree editable="bottom">
-                                        <field name="name"/>
-                                        <field name="relation"/>
-                                        <field name="date_of_birth"/>
-                                        <field name="age"/>
-                                        <field name="is_adult"/>
-                                        <field name="medical_history"/>
-                                    </tree>
-                                </field>
-                            </page>
-                            <page string="History">
-                                <group>
-                                    <group>
-                                    </group>
-                                    <group>
-                                    </group>
-                                </group>
-                            </page>
-                            <page string="Other Info">
+                            <page string="Other Info" name="other_info">
                                 <group>
                                     <field name="qr_code" widget='html' class="oe_avatar" options='{"preview_image": "image_128"}'/>
                                     <group>
@@ -165,6 +142,11 @@
                                         <li t-if="record.mobile.raw_value" class="o_text_overflow"><field name="mobile"/></li>
                                     </ul>
                                 </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left text-muted">
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
+                                </div>
                             </div>
                         </t>
                     </templates>
@@ -176,11 +158,21 @@
             <field name="model">reception.customer</field>
             <field name="arch" type="xml">
                 <search string="Search Customer">
-                    <field name="customer_no"/>
                     <field name="name"/>
                     <field name="qid"/>
                     <field name="gender"/>
                     <field name="mobile"/>
+                    <field name="customer_no" string="Customer ID"/>
+                    <filter string="Male" domain="[('gender', '=', 'male')]" name="male"/>
+                    <filter string="Female" domain="[('gender', '=', 'female')]" name="female"/>
+                    <separator/>
+                    <filter string="No Email" domain="[('email', '=', False)]" name="no_email"/>
+                    <separator/>
+                    <filter string="No Mobile Number" domain="[('mobile', '=', False)]" name="no_mobile"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_gender" string="Gender" context="{'group_by':'gender'}"/>
+                        <filter name="group_by_age" string="Age" context="{'group_by':'age'}"/>
+                    </group>
                 </search>
             </field>
         </record>
@@ -188,7 +180,12 @@
 			<field name="name">Customers</field>
 			 <field name="res_model">reception.customer</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="view_mode">tree,kanban,form,activity,map</field>
+			<field name="view_mode">kanban,tree,form,activity,map</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Create a new Customer
+                </p>
+            </field>
 		</record>
 
 		

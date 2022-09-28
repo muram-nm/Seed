@@ -12,7 +12,7 @@
                             attrs="{'invisible': [('treatment_state', 'in', ['sale', 'cancel'])]}"/>
                     <button name="action_cancel" type="object"
                             string="Cancel" data-hotkey="z"
-                            attrs="{'invisible': [('treatment_state', 'in', ['sale', 'cancel'])]}"/>
+                            attrs="{'invisible': [('treatment_state', 'in', ['cancel'])]}"/>
                     <button name="action_draft" type="object" string="Set to Draft" data-hotkey="w"
                             attrs="{'invisible': [('treatment_state', 'in', ['sale', 'draft'])]}"/>
                     <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
@@ -40,7 +40,7 @@
                     </div>
                     <group>
                         <group name="partner_details">
-                            <field name="customer_id"/>
+                            <field name="customer_id" attrs="{'readonly':[('state','!=','draft')]}"/>
                             <field name="partner_id" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}" options='{"always_reload": True}' invisible="1" />
                             <field name="show_update_pricelist" invisible="1"/>
                             <field name="company_id" invisible="1"/>
@@ -51,25 +51,25 @@
                             <field name="invoice_status" invisible="1"/>
                         </group>
                         <group name="order_details">
-                            <field name="date_order" required="1"/>
-                            <field name="pricelist_id" options="{'no_open':True,'no_create': True}"/>
-                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>                           
+                            <field name="date_order" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="pricelist_id" options="{'no_open':True,'no_create': True}" attrs="{'readonly':[('state','!=','draft')]}"/>
+                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" attrs="{'readonly':[('state','!=','draft')]}"/>                           
                         </group>
                     </group>
                     <notebook>
                         <page string="Service" name="order_lines" >
-                            <div class="oe_button_box text-center oe_edit_only oe_primary" name="model_box">
+                             <div class="oe_button_box text-left text-center oe_edit_only" name="model_box">
                                 <div class="o_radio_hide_bullet overflow-auto">
-                                    <field name="product_choice_id" string="Products"
-                                           nolabel="1" widget="radio" options="{'horizontal': true}" 
-                                          icon="fa-dollar"/>
+                                    <field name="product_choice_id" string="Service" help="Category of asset" nolabel="1" widget="radio" options="{'horizontal': true}" attrs="{'readonly':[('state','!=','draft')]}"/>
                                 </div>
                             </div>
+
                             <field name="reception_order_line" widget="section_and_note_one2many"
                                    context="{'price_list_id': pricelist_id, 'partner_id': partner_id}"
                                     force_save="1" 
                                     mode="tree,kanban"
                                     options="{'no_create_edit': True}" 
+                                    attrs="{'readonly':[('state','!=','draft')]}"
                                     >
                                 <form create="0">
                                     <group col="4" >
@@ -133,18 +133,16 @@
                                 </group>
                                 <div class="oe_clear"/>
                             </group>
+                            <field name="note" placeholder="Note ..." attrs="{'readonly':[('state','!=','draft')]}"/>
                         </page>
                         <page string="Other Info" name="other_information">
                             <group>
                                 <group>
-                                    <field name="user_id" string="Responsible"/>
+                                    <field name="user_id" string="Salesperson" readonly="1"/>
                                     <field name="analytic_account_id" context="{ 'default_name':name}" attrs="{'readonly': [('invoice_count','!=',0),('state','=','sale')]}" groups="analytic.group_analytic_accounting" force_save="1"/>
-                                    <field name="invoice_status" states="sale,done" groups="base.group_no_one"/>
+                                    <field name="invoice_status" states="sale,done" groups="base.group_no_one" readonly="1"/>
                                 </group>
                             </group>
-                        </page>
-                        <page name="note" string="Note">
-                            <field name="note" placeholder="Note ..."/>
                         </page>
                     </notebook>
                 </sheet>
@@ -245,7 +243,7 @@
              <field name="name">Reception Orders</field>
              <field name="res_model">reception.order</field>
              <field name="type">ir.actions.act_window</field>
-             <field name="view_mode">calendar,tree,kanban,form</field>
+             <field name="view_mode">tree,calendar,kanban,form</field>
          </record>
          
 

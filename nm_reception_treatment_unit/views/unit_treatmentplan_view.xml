@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="treatmentplan_tree_view" model="ir.ui.view">
+			<field name="name">unit.treatmentplan.tree</field>
+			<field name="model">unit.treatmentplan</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="date"/>
+					<field name="customer_id"/>
+					<field name="guest_id"/>                    
+                    <field name="treatmentplan_id"/>
+                    <field name="frequency"/>
+	                <field name="purpose"/>
+                    <field name="session_duration" widget="float_time"/>
+	                <field name="plan_duration" widget="float_time"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_treatmentplan" model="ir.ui.view">
+	        <field name="name">unit.treatmentplan.form</field>
+	        <field name="model">unit.treatmentplan</field>
+	        <field eval="2" name="priority"/>
+	        <field name="arch" type="xml">
+	            <form string="Treatment Plans">
+	            	<sheet>
+	            		<group>
+	                    	<group>
+	                    		<field name="customer_id" invisible="1"/>
+	                    		<field name="guest_id" invisible="1"/>
+	                    		<field name="treatmentplan_id"/>
+	                    		<field name="frequency"/>
+	                    		<field name="purpose"/>
+	                        </group>
+	                        <group>
+	                        	<field name="date" invisible="1"/>
+	                        	<field name="order_id"/>
+	                        	<field name="session_duration" widget="float_time"/>
+	                        	<field name="plan_duration" widget="float_time"/>
+	                        </group>
+	                    </group>
+	                    <group>
+	                    	<field name="description"/>
+	                    </group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+
+	    <record id="treatmentplan_search_view" model="ir.ui.view">
+            <field name="name">unit.treatmentplan.search</field>
+            <field name="model">unit.treatmentplan</field>
+            <field name="arch" type="xml">
+                <search string="Search Lab Test">
+					<field name="customer_id"/>
+					<field name="guest_id"/>
+                    <field name="order_id"/>
+                    <field name="treatmentplan_id"/>
+                    <group expand="0" string="Group By">
+                        <filter name="group_customer" string="Customer" context="{'group_by':'customer_id'}"/>
+                        <filter name="group_order" string="Order" context="{'group_by':'order_id'}"/>
+                        <filter name="group_date" string="Date" context="{'group_by':'date'}"/>
+                        <filter name="group_treatmentplan" string="Treatment Plan" context="{'group_by':'treatmentplan_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_treatmentplan" model="ir.actions.act_window">
+			<field name="name">Treatment Plans</field>
+			 <field name="res_model">unit.treatmentplan</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem 
+			id="menu_treatmentplan"
+			action="action_treatmentplan"
+			parent="nm_treatment_unit.menu_treatment_unit_root"
+			sequence="25"/>
+	</data>
+</odoo>

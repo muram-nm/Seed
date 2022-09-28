@@ -2,21 +2,6 @@
 <odoo>
 	 <data>
 
-		<!-- <record id="product_template_form_view_inherited" model="ir.ui.view">
-			<field name="name">reception.product.template.form</field>
-			<field name="model">product.template</field>
-			<field name="inherit_id" ref="product.product_template_form_view"/>
-			<field name="arch" type="xml">
-				<data>
-					<div name="options" position="inside">
-						<span class="d-inline-block">
-							<field name="reception_ok"/>
-							<label for="reception_ok"/>
-						</span>
-					</div>
-				</data>
-			</field>
-		</record> -->
 
 		<record id="reception_service_form" model="ir.ui.view">
 			<field name="name">reception.service.form</field>
@@ -24,7 +9,6 @@
 			<field name="arch" type="xml">
 				<form string="">
 					<header>
-						
 					</header>
 					<sheet>
 						<div class="oe_title">
@@ -54,17 +38,12 @@
 								<field name="attribute_line_ids">
 									<tree editable="bottom">
 										<field name="attribute_id"/>
-										<field name="value_ids" 
-										widget="many2many_tags"
-										/>
+										<field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True, 'color_field': 'color'}" context="{'default_attribute_id': attribute_id, 'show_attribute': False}"/>
 										
 									</tree>
 								</field>
 							</page>
 						</notebook>
-					
-					
-						
 					</sheet>
 				</form>
 			</field>
@@ -81,6 +60,19 @@
 			</field>
 		</record>
 
+
+		<record id="servicer_search" model="ir.ui.view">
+			<field name="name">servicer.search</field>
+			<field name="model">product.template</field>
+			<field name="arch" type="xml">
+				<search string="Service">
+					<field name="name"/>
+					
+				</search>
+			</field>
+		</record>
+
+
 		<record id="action_reception_services" model="ir.actions.act_window">
              <field name="name">Services</field>
              <field name="res_model">product.template</field>
@@ -93,12 +85,11 @@
 				'default_service_tracking':'task_global_project'
 				
 				}</field>
+        	<field name="search_view_id" ref="servicer_search"/>
 			<field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'tree', 'view_id': ref('reception_service_tree')}),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('reception_service_form')})]"/>
         </record>
-
-      
 
 	 </data>
 </odoo>

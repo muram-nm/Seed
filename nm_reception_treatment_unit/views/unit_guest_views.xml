@@ -70,10 +70,22 @@
                 <attribute name="invisible">True</attribute>
                 
             </field>
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="diagnosis"/>
+                <field name="core_objectives"/>
+                <field name="vital_signs" invisible="1"/>
+                <field name="lab_test" invisible="1"/>
+                <field name="prescription" invisible="1"/>
+                <field name="treatment_plan" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='vital_signs']" position="attributes">
+                <attribute name="attrs">{'invisible':[('vital_signs','!=',True)]}</attribute>
+            </xpath>
 
             <xpath expr="//notebook/page[@name='vital_signs']" position="after">
-                <page string="Lab Tests">
-                    <button name="add_to_operation" type="object" string="Add To Operation" class="oe_highlight" icon="fa-plus"
+                <page string="Lab Test" attrs="{'invisible':[('lab_test','!=',True)]}">
+                    <button name="add_to_operation" type="object" string="Add To Operation" class="oe_highlight" icon="fa-plus" 
                    />
                     <field name="test_ids" context="{'default_customer_id':customer_id,}">
                         <tree editable="bottom" >
@@ -86,15 +98,68 @@
                         </tree>
                     </field>
                 </page>
-                <page string="Prescriptions">
-                    <field name="prescription_ids" context="{'default_customer_id':customer_id,'default_order_id':reception_order_id}" >
+                <page string="Treatment Plan" attrs="{'invisible':[('treatment_plan','!=','True')]}">
+                    <field name="treatmentplan_ids" context="{'default_customer_id':customer_id,'default_order_id':reception_order_id}" >
                         <tree editable="bottom">
+                            <field name="customer_id" invisible="1"/>
                             <field name="date"/>
-                            <field name="prescription_id"/>
+                            <field name="treatmentplan_id"/>
                             <field name="description"/>
+                            <field name="frequency"/>
+                            <field name="purpose"/>
+                            <field name="session_duration" widget="float_time"/>
+                            <field name="plan_duration" widget="float_time"/>
                         </tree>
                     </field>
                 </page>
+                <page string="Life Style Plan">
+                    <group>
+                        <group string="Diet">
+                            <field name="avoid"/>
+                            <field name="introduce"/>
+                            <field name="increase"/>
+                        </group>
+                        <group string="Exercise">
+                            <field name="type"/>
+                            <field name="intensity"/>
+                            <field name="frequency"/>
+                            <field name="duration"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Sleep">
+                            <field name="sleep" nolabel="1"/>
+                        </group>
+                        <group string="Stress Management">
+                            <field name="stress_management" nolabel="1"/>
+                        </group>
+                        <group string="Emotional/Spiritual">
+                            <field name="emotional_spiritual" nolabel="1"/>
+                        </group>
+                    </group>
+                </page>
+                <page string="Prescriptions" attrs="{'invisible':[('prescription','!=','True')]}">
+                    <field name="prescription_ids">
+                        <tree editable="bottom">
+                            <field name="prescription_id"/>
+                            <field name="purpose"/>
+                            <field name="per_day"/>
+                            <field name="upon_arising"/>
+                            <field name="with_breakfast"/>
+                            <field name="mid_morning"/>
+                            <field name="with_lunch"/>
+                            <field name="mid_afternoon"/>
+                            <field name="with_dinner"/>
+                            <field name="prior_to_bed"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='vital_signs']/group/group/field[@name='spo']" position="after">
+                <field name="weight"/>
+                <field name="height"/>
+                <field name="bmi"/>
             </xpath>
         </field>
     </record>
@@ -112,7 +177,6 @@
                 <field name="reception_order_id"/>
             </field>
         </field>
-        <!-- <field name="groups_id" eval="[(4, ref('receptions_team.group_reception_receptionsman'))]"/> -->
     </record>
 
     <record id="unit_guest_view_search" model="ir.ui.view">

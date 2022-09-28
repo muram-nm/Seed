@@ -2,21 +2,21 @@
 from odoo import api, fields, models, _
 
 class IntakeForm(models.Model):
-	_name = 'intake.form'
+	_name = 'unit.intakeform'
 	_description = 'Intake Form'
 	_inherit = ['mail.thread', 'mail.activity.mixin']
-	_rec_name = 'partner_id' 
+	_rec_name = 'customer_id' 
 
-	partner_id = fields.Many2one('reception.customer',string="Customer",
+	customer_id = fields.Many2one('reception.customer',string="Customer",
 								tracking=True)
-	qid = fields.Char(related="partner_id.qid",tracking=True)
-	date_of_birth = fields.Date(related="partner_id.date_of_birth",
+	qid = fields.Char(related="customer_id.qid",tracking=True)
+	date_of_birth = fields.Date(related="customer_id.date_of_birth",
 								tracking=True)
-	age = fields.Integer(related="partner_id.age",tracking=True)
+	age = fields.Integer(related="customer_id.age",tracking=True)
 	date = fields.Date(default=fields.Date.today(),string="Today's Date",
 						tracking=True,readonly=True)
-	email = fields.Char(related="partner_id.email",tracking=True)
-	phone = fields.Char(related="partner_id.phone",string="Cell Phone",
+	email = fields.Char(related="customer_id.email",tracking=True)
+	phone = fields.Char(related="customer_id.phone",string="Cell Phone",
 						tracking=True)
 	hear_about_us = fields.Selection([
 		('ifm', 'IFM Website'),('referral_clinician', 'Referral From Clinician'),
@@ -259,7 +259,7 @@ class MedicalRecord(models.Model):
 	success = fields.Char(tracking=True)
 	is_health_concerns = fields.Boolean(default=False)
 	is_medical_history = fields.Boolean(default=False)
-	form_id = fields.Many2one('intake.form')
+	form_id = fields.Many2one('unit.intakeform')
 	medication_food = fields.Char(tracking=True)
 	reaction = fields.Char(tracking=True)
 	is_allergies = fields.Boolean(default=False)
@@ -276,7 +276,7 @@ class Exercise(models.Model):
 	type = fields.Char(tracking=True)
 	week_times = fields.Char(string="# of times per week",tracking=True)
 	duration = fields.Char(string="Duration (minutes)",tracking=True)
-	form_id = fields.Many2one('intake.form')
+	form_id = fields.Many2one('unit.intakeform')
 
 
 
@@ -294,7 +294,7 @@ class FamilyDisease(models.Model):
 	sister = fields.Boolean(default=False,tracking=True)
 	child = fields.Boolean(default=False,tracking=True)
 	other = fields.Boolean(default=False,tracking=True)
-	form_id = fields.Many2one('intake.form')
+	form_id = fields.Many2one('unit.intakeform')
 	immune_id = fields.Many2one('immune.symptomology',tracking=True)
 	respiratory_id = fields.Many2one('respiratory.symptomology',tracking=True)
 	skin_problem_id = fields.Many2one('skin_problem.symptomology',tracking=True)

@@ -3,8 +3,8 @@
     <data noupdate="1">
 
         <record id="lab_test" model="ir.sequence">
-            <field name="name">lab.test</field>
-            <field name="code">lab.test</field>
+            <field name="name">unit.labtest</field>
+            <field name="code">unit.labtest</field>
             <field name="prefix">TEST/</field>
             <field name="padding">4</field>
             <field name="active">True</field>
