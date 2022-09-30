@@ -67,7 +67,7 @@
         <field name="model">unit.guest</field>
         <field name="arch" type="xml">
             <!-- <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create" -->
-            <kanban default_group_by="unit_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column o_kanban_project_tasks" on_create="quick_create">
                 quick_create_view="nm_treatment_unit.quick_create_guest_form" examples="project" js_class="project_task_kanban" sample="1">
                 <field name="color"/>
                 <field name="priority"/>
