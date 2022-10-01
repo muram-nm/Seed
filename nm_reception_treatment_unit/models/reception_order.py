@@ -15,7 +15,7 @@ class ReceptionOrder(models.Model):
     unit_id = fields.Many2one(
         'unit.unit', 'Unit', readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
         help='Select a non billable Unit on which guest can be created.')
-    unit_ids = fields.Many2many('unit.unit', compute="_compute_unit_ids", string='Unit', copy=False, groups="nm_treatment_unit.group_unit_manager", help="units used in this sales order.")
+    unit_ids = fields.Many2many('unit.unit', compute="_compute_unit_ids", string='Unit', copy=False, groups="nm_treatment_unit.group_unit_admin", help="units used in this sales order.")
     unit_count = fields.Integer(string='Number of Units', compute='_compute_unit_ids', groups='project.group_project_manager')
   
 

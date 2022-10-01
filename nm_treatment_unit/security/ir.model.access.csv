@@ -1,8 +1,20 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_unit_unit,treatment_unit,model_unit_unit,,1,1,1,1
-access_unit_guest,treatment_guest,model_unit_guest,,1,1,1,1
-access_unit_stage,treatment_stage,model_unit_guest_stages,,1,1,1,1
+access_unit_unit_admin,treatment_unit,model_unit_unit,group_unit_admin,1,1,1,1
+access_unit_guest_admin,treatment_guest,model_unit_guest,group_unit_admin,1,1,1,1
+access_unit_stage_admin,treatment_stage,model_unit_guest_stages,,1,1,1,1
+
+access_unit_unit_supervisor,treatment_unit,model_unit_unit,group_unit_supervisor,1,1,0,0
+access_unit_guest_supervisor,treatment_guest,model_unit_guest,group_unit_supervisor,1,1,0,0
+
+access_unit_unit_user,treatment_unit,model_unit_unit,group_unit_user,1,0,0,0
+access_unit_guest_user,treatment_guest,model_unit_guest,group_unit_user,1,1,0,0
+
 access_unit_update,treatment_update,model_unit_update,,1,1,1,1
 access_unit_personal_stage,unit.personal.stage.user,model_unit_guest_stage_personal,base.group_user,1,1,1,1
-access_report_unit_guest_user,unit.unit.guest.user,model_report_unit_guest_user,nm_treatment_unit.group_unit_manager,1,1,1,1
+access_report_unit_guest_user,unit.unit.guest.user,model_report_unit_guest_user,nm_treatment_unit.group_unit_admin,1,1,1,1
+access_unit_guest_stages_delete_wizard,unit.guest.stages.delete.wizard,model_unit_guest_stages_delete_wizard,group_unit_user,1,1,1,1
 
+access_project_task_type_unit_admin,project.task.type manager,project.model_project_task_type,group_unit_admin,1,1,1,1
+access_project_project_unit_admin,project.project,project.model_project_project,group_unit_admin,1,1,1,1
+access_project_project_stage_unit_admin,project.project_stage.manager,project.model_project_project_stage,group_unit_admin,1,1,1,1
+access_project_task_unit_admin,project.task,project.model_project_task,group_unit_admin,1,1,1,1

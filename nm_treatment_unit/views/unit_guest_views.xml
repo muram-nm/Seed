@@ -433,8 +433,25 @@
             <field name="name">Guest</field>
             <field name="res_model">unit.guest</field>
             <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
-            <field name="context">{'search_default_my_guests': 1}</field>
+            <field name="context">{'search_default_my_guests': 1,'search_default_unit_id': 1}</field>
             <field name="domain">[('display_unit_id', '!=', False)]</field>
+            <field name="search_view_id" ref="view_guest_search_form"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No guests found. Let's create one!
+                </p><p>
+                    To get things done, use activities and status on guests.<br/>
+                    Chat in real-time or by email to collaborate efficiently.
+                </p>
+            </field>
+        </record>
+
+    <record id="action_view_all_guest_supervisor" model="ir.actions.act_window">
+            <field name="name">Guests</field>
+            <field name="res_model">unit.guest</field>
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+            <field name="context">{'search_default_unit_id': 1}</field>
+            <field name="domain">[('unit_id.user_id', '=', uid)]</field>
             <field name="search_view_id" ref="view_guest_search_form"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
@@ -475,10 +492,18 @@
 
     <menuitem 
         name="My Guests" 
-        id="menu_guest_management" 
+        id="menu_guest_management_my" 
         parent="nm_treatment_unit.menu_treatment_unit_root"
         action="action_view_all_guest" 
-        sequence="20" 
-        groups="base.group_no_one,nm_treatment_unit.group_unit_user"/>
+        sequence="1" 
+        groups="nm_treatment_unit.group_unit_user,nm_treatment_unit.group_unit_supervisor,nm_treatment_unit.group_unit_admin"/>
+
+    <menuitem 
+        name="Guests" 
+        id="menu_guest_management" 
+        parent="nm_treatment_unit.menu_treatment_unit_root"
+        action="action_view_all_guest_supervisor" 
+        sequence="2" 
+        groups="nm_treatment_unit.group_unit_supervisor"/>
 
 </odoo>

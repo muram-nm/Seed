@@ -217,7 +217,7 @@
         id="menu_unit_config_guest_stages" 
         name="Guest Stages" 
         parent="nm_treatment_unit.menu_configuration" 
-        sequence="10" 
+        sequence="3" 
         groups="base.group_no_one"/>
 
 

@@ -186,7 +186,7 @@
                                                     <a name="attachment_tree_view" type="object">Documents</a>
                                                 </div>
                                             </div>
-                                            <div class="col-6 o_kanban_card_manage_section o_kanban_manage_reporting" groups="nm_treatment_unit.group_unit_manager">
+                                            <div class="col-6 o_kanban_card_manage_section o_kanban_manage_reporting" groups="nm_treatment_unit.group_unit_admin">
                                                 <div role="menuitem" class="o_kanban_card_manage_title">
                                                     <span>Reporting</span>
                                                 </div>
@@ -196,7 +196,7 @@
                                                
                                             </div>
                                         </div>
-                                        <div class="o_kanban_card_manage_settings row" groups="nm_treatment_unit.group_unit_manager">
+                                        <div class="o_kanban_card_manage_settings row" groups="nm_treatment_unit.group_unit_admin">
                                             <div role="menuitem" aria-haspopup="true" class="col-8">
                                                 <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
                                             </div>
@@ -316,7 +316,7 @@
             <form string="Unit" class="o_form_project_project" delete="0">
                 <header>                
                     
-                    <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" groups="nm_treatment_unit.group_unit_manager"/>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" groups="nm_treatment_unit.group_unit_admin"/>
                 </header>
             <sheet string="Unit">
                 <div class="oe_button_box" name="button_box" groups="base.group_user">
@@ -560,7 +560,7 @@
     <menuitem 
         action="open_view_unit_all_config" 
         id="menu_units_config" 
-        name="Units" 
+        name="Treatment Units" 
         parent="nm_treatment_unit.menu_configuration" 
         sequence="1"/>
 
@@ -574,7 +574,7 @@
 
     <!-- Reporting menus -->
     <!-- <menuitem id="menu_unit_report" name="Reporting"
-        groups="nm_treatment_unit.group_unit_manager"
+        groups="nm_treatment_unit.group_unit_admin"
         parent="nm_treatment_unit.menu_treatment_unit_root" 
         sequence="20"/>
 

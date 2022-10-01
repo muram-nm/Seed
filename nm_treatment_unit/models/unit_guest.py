@@ -328,7 +328,7 @@ class Guest(models.Model):
         self._guest_message_auto_subscribe_notify({guest: guest.user_ids - old_user_ids[guest] - self.env.user for guest in self})
 
         if 'user_ids' in vals:
-            guest._populate_missing_personal_stages()
+            guests._populate_missing_personal_stages()
 
         # rating on stage
         # if 'stage_id' in vals and vals.get('stage_id'):

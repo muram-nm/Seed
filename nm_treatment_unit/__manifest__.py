@@ -31,6 +31,7 @@
         'views/unit_views.xml',
         'views/unit_stage_views.xml',
         'views/res_config_settings_views.xml',
+        'wizard/unit_guest_stage_delete_views.xml',
     ],
     'assets': {
         'web.assets_backend': [

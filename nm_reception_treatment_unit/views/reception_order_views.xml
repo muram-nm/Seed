@@ -10,7 +10,7 @@
                 <button type="object" name="action_view_guest" class="oe_stat_button" icon="fa-tasks" attrs="{'invisible': [('guests_count', '=', 0)]}" groups="nm_treatment_unit.group_unit_user">
                     <field name="guests_count" widget="statinfo" string="Guests"/>
                 </button>
-                <button type="object" name="action_view_unit_ids" class="oe_stat_button" icon="fa-puzzle-piece" string="Units"  groups="nm_treatment_unit.group_unit_manager"  attrs="{'invisible': [('guests_count', '=', 0)]}">
+                <button type="object" name="action_view_unit_ids" class="oe_stat_button" icon="fa-puzzle-piece" string="Units"  groups="nm_treatment_unit.group_unit_admin"  attrs="{'invisible': [('guests_count', '=', 0)]}">
                 </button>
             </xpath>
         </field>
