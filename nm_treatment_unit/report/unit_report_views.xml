@@ -52,20 +52,17 @@
                     <field name="name" string="Tags" filter_domain="[('guest_id.tag_ids', 'ilike', self)]"/>
                     <field name="date_assign"/>
                     <field name="date_end"/>
-                    <field name="date_deadline"/>
                     <field name="date_last_stage_update"/>
                     <filter string="My Unit" name="own_units" domain="[('unit_id.user_id', '=', uid)]"/>
                     <filter string="My Guest" name="my_tasks" domain="[('guest_id.user_ids', 'in', uid)]"/>
                     <separator/>
                     <filter string="Starred" name="starred" domain="[('guest_id.priority', 'in', [0, 1])]"/>
                     <separator/>
-                    <filter string="Guest Late" name="late" domain="[('guest_id.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
                     <separator/>
                     <filter string="Unassigned Guest" name="unassigned" domain="[('user_ids', '=', False)]"/>
                     <separator/>
                     <filter string="Open guest" name="open_tasks" domain="[('stage_id.fold', '=', False), ('stage_id.is_closed', '=', False)]"/>
                     <separator/>
-                    <filter name="filter_date_deadline" date="date_deadline"/>
                     <filter name="filter_date_assign" date="date_assign"/>
                     <filter name="filter_date_last_stage_update" date="date_last_stage_update"/>
                     <group expand="0" string="Extended Filters">
@@ -77,7 +74,6 @@
                         <filter string="Stage" name="Stage" context="{'group_by': 'stage_id'}"/>
                         <filter string="Assignees" name="User" context="{'group_by': 'user_ids'}"/>
                         <filter string="Customer" name="Customer" context="{'group_by': 'partner_id'}"/>
-                        <filter string="Deadline" name="deadline" context="{'group_by': 'date_deadline'}"/>
                     </group>
                 </search>
             </field>

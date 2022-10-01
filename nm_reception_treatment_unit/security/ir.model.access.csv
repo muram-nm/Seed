@@ -16,3 +16,5 @@ access_unit_labtest,unit_labtest.unit_labtest,model_unit_labtest,,1,1,1,1
 access_unit_treatmentplan,unit.treatmentplan,model_unit_treatmentplan,,1,1,1,1
 access_unit_prescription,unit.prescription,model_unit_prescription,,1,1,1,1
 access_unit_prescription_details,unit.prescription.details,model_unit_prescription_details,,1,1,1,1
+
+access_reception_customer_unit_user,reception.customer,model_reception_customer,nm_treatment_unit.group_unit_user,1,0,0,0

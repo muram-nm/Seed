@@ -16,7 +16,6 @@ class ReportUnitGuestUser(models.Model):
     create_date = fields.Datetime("Create Date", readonly=True)
     date_assign = fields.Datetime(string='Assignment Date', readonly=True)
     date_end = fields.Datetime(string='Ending Date', readonly=True)
-    date_deadline = fields.Date(string='Deadline', readonly=True)
     date_last_stage_update = fields.Datetime(string='Last Stage Update', readonly=True)
     unit_id = fields.Many2one('unit.unit', string='Unite', readonly=True)
     working_days_close = fields.Float(string='Working Days to Close',
@@ -55,14 +54,13 @@ class ReportUnitGuestUser(models.Model):
                     t.date_assign as date_assign,
                     t.date_end as date_end,
                     t.date_last_stage_update as date_last_stage_update,
-                    t.date_deadline as date_deadline,
                     t.unit_id,
                     t.priority,
                     t.partner_id,
                     t.stage_id as stage_id,
                     t.kanban_state as state,
                   
-                    (extract('epoch' from (t.date_deadline-(now() at time zone 'UTC'))))/(3600*24)  as delay_endings_days
+                    (extract('epoch' from (t.date_end-(now() at time zone 'UTC'))))/(3600*24)  as delay_endings_days
         """
         return select_str
 
@@ -74,7 +72,6 @@ class ReportUnitGuestUser(models.Model):
                     t.write_date,
                     t.date_assign,
                     t.date_end,
-                    t.date_deadline,
                     t.date_last_stage_update,
                     t.unit_id,
                     t.priority,

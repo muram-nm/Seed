@@ -69,7 +69,6 @@ class Guest(models.Model):
         index=True,
         copy=False,
         readonly=True)
-    date_deadline = fields.Date(string='Deadline', index=True, copy=False, tracking=True, task_dependency_tracking=True)
     priority = fields.Selection([
             ('0', 'Normal'),
             ('1', 'Important'),

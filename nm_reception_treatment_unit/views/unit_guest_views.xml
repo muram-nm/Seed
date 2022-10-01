@@ -71,12 +71,23 @@
                 
             </field>
             <xpath expr="//field[@name='parent_id']" position="after">
-                <field name="diagnosis"/>
-                <field name="core_objectives"/>
                 <field name="vital_signs" invisible="1"/>
                 <field name="lab_test" invisible="1"/>
                 <field name="prescription" invisible="1"/>
                 <field name="treatment_plan" invisible="1"/>
+                <field name="description_page" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='description']" position="attributes">
+                <attribute name="attrs">{'invisible':[('description_page','!=',True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='description']/field[@name='description']" position="before">
+                <group col="4">
+                    <field name="diagnosis"/>
+                    <field name="core_objectives"/>
+                </group>
+                <separator/>
             </xpath>
 
             <xpath expr="//notebook/page[@name='vital_signs']" position="attributes">
@@ -173,7 +184,7 @@
                 <attribute name="options">{"no_create": True}</attribute>
                 <attribute name="readonly">0</attribute>
             </xpath>
-            <field name="user_ids" position="after">
+            <field name="parent_id" position="after">
                 <field name="reception_order_id"/>
             </field>
         </field>

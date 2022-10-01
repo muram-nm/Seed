@@ -18,3 +18,12 @@ access_project_task_type_unit_admin,project.task.type manager,project.model_proj
 access_project_project_unit_admin,project.project,project.model_project_project,group_unit_admin,1,1,1,1
 access_project_project_stage_unit_admin,project.project_stage.manager,project.model_project_project_stage,group_unit_admin,1,1,1,1
 access_project_task_unit_admin,project.task,project.model_project_task,group_unit_admin,1,1,1,1
+
+access_project_project_unit_supervisor,project.project,project.model_project_project,group_unit_supervisor,1,1,0,0
+access_project_project_stage_unit_supervisor,project.project_stage.manager,project.model_project_project_stage,group_unit_supervisor,1,1,0,0
+access_project_task_unit_supervisor,project.task,project.model_project_task,group_unit_supervisor,1,1,0,0
+
+access_project_project_unit_user,project.project,project.model_project_project,group_unit_user,1,1,0,0
+access_project_project_stage_unit_user,project.project_stage.manager,project.model_project_project_stage,group_unit_user,1,1,0,0
+access_project_task_unit_user,project.task,project.model_project_task,group_unit_user,1,1,0,0
+

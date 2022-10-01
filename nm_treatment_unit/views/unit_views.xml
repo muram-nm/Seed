@@ -55,21 +55,11 @@
                     <separator/>
                     <filter string="Starred" name="starred" domain="[('priority', 'in', [0, 1])]"/>
                     <separator/>
-                    <filter string="Late Guests" name="late" domain="[('date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
-                    <separator/>
                    
                     <separator/>
                     <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction', '=', True)]"/>
                     <separator/>
                     <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
-                    <separator/>
-                    <filter invisible="1" string="Late Activities" name="activities_overdue"
-                        domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
-                        help="Show all records which has next action date is before today"/>
-                    <filter invisible="1" string="Today Activities" name="activities_today"
-                        domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                        domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                     <group expand="0" string="Group By">
                         <filter string="Stage" name="stage" context="{'group_by': 'stage_id'}"/>
                         <filter string="Personal Stage" name="personal_stage" context="{'group_by': 'personal_stage_type_ids'}"/>
@@ -77,7 +67,6 @@
                         <filter string="Treatment" name="treatment" context="{'group_by': 'unit_id'}"/>
                         <filter string="Customer" name="customer" context="{'group_by': 'partner_id'}"/>
                         <filter string="Kanban State" name="kanban_state" context="{'group_by': 'kanban_state'}"/>
-                        <filter string="Deadline" name="date_deadline" context="{'group_by': 'date_deadline'}"/>
                         <filter string="Creation Date" name="group_create_date" context="{'group_by': 'create_date'}"/>
                     </group>
                 </search>

@@ -24,6 +24,7 @@ class Guest(models.Model):
     lab_test = fields.Boolean("Lab Test",related='stage_id.lab_test')
     prescription = fields.Boolean("Prescription",related='stage_id.prescription')
     treatment_plan = fields.Boolean('Treatment Plan',related='stage_id.treatment_plan') 
+    description_page = fields.Boolean(related='stage_id.description_page') 
     diagnosis = fields.Text(tracking=True)
     core_objectives = fields.Text(tracking=True)
     height = fields.Float(tracking=True)
