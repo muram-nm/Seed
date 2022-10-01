@@ -57,6 +57,9 @@
                 <filter string="My Units" name="my_units" domain="[('unit_id.user_id', '=', uid)]"/>
                 <filter string="My Favorite Units" name="my_favorite_projects" domain="[('unit_id.favorite_user_ids', 'in', [uid])]"/>
                 <filter string="Followed Units" name="my_followed_units" domain="[('unit_id.message_is_follower', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Unit" name="unit_id" context="{'group_by': 'unit_id'}"/>
+                </group>
             </xpath>
         </field>
     </record>
