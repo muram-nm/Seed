@@ -55,6 +55,7 @@
             <xpath expr="//filter[@name='unassigned']" position="after">
                 <separator/>
                 <filter string="My Units" name="my_units" domain="[('unit_id.user_id', '=', uid)]"/>
+                <filter string="My Responsible" name="my_responsible_guests" domain="[('stage_id.user_ids', 'in', [uid])]"/>
                 <filter string="My Favorite Units" name="my_favorite_projects" domain="[('unit_id.favorite_user_ids', 'in', [uid])]"/>
                 <filter string="Followed Units" name="my_followed_units" domain="[('unit_id.message_is_follower', '=', True)]"/>
                 <group expand="0" string="Group By">
@@ -436,7 +437,7 @@
             <field name="name">Guest</field>
             <field name="res_model">unit.guest</field>
             <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
-            <field name="context">{'search_default_my_guests': 1,'search_default_unit_id': 1}</field>
+            <field name="context">{'search_default_unit_id': 1}</field>
             <field name="domain">[('display_unit_id', '!=', False)]</field>
             <field name="search_view_id" ref="view_guest_search_form"/>
             <field name="help" type="html">
@@ -481,7 +482,8 @@
             <field name="name">My Guests</field>
             <field name="res_model">unit.guest</field>
             <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
-            <field name="context">{'search_default_my_guests': 1, 'all_guest': 0,'search_default_unit_id': 1}</field>
+            <field name="context">{'search_default_unit_id': 1,'search_default_my_responsible_guests':1}</field>
+            <field name="domain">[('stage_id.user_ids', 'in', [uid])]</field>
             <field name="search_view_id" ref="view_guest_search_form_extended"/>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
