@@ -86,9 +86,19 @@ class ReceptionCustomer(models.Model):
         result = super(ReceptionCustomer, self).create(vals)
 
         # give portal access to the customer
+        # group_portal = self.env.ref('base.group_portal')
+        # group_public = self.env.ref('base.group_public')
+        # company = customer.partner_id.company_id or self.env.company
+        # user_sudo = self.sudo().with_company(company.id)._create_user(customer)
+        # if user_sudo:
+        #     user_sudo.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
+        
+        give portal access to the customer
         group_portal = self.env.ref('base.group_portal')
         group_public = self.env.ref('base.group_public')
         for customer in result:
+            if customer.email in self.env['res.users'].search([]).mapped('login'):
+                raise ValidationError (_('there is user with same email'))
             user_sudo = customer.partner_id.user_id.sudo()
             if not user_sudo:
                 # create a user if necessary and make sure it is in the portal group
@@ -132,13 +142,16 @@ class ReceptionCustomer(models.Model):
 
         return True
 
-
     def action_show_orders(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("nm_health_wellness_reception_sales.action_reception_order")
-        action['name'] = self.name + "' Orders"
-        action['domain'] = [("partner_id", "=", self.partner_id.id)]
-        return action
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.name + "' Orders",
+            'res_model': 'reception.order',
+            'view_mode': 'list,calendar,kanban,form',
+            'search_view_id': self.env.ref('nm_health_wellness_reception_sales.reception_order_search_view').id,
+            'domain': [("partner_id", "=", self.partner_id.id)],
+        }
 
 
 

@@ -19,6 +19,7 @@ class ReceptionCustomer(models.Model):
 	total_forms = fields.Integer(compute='compute_total')
 	total_tests = fields.Integer(compute='compute_total')
 	total_treatmentplans = fields.Integer(compute='compute_total')
+	total_prescriptions = fields.Integer(compute='compute_total')
 	order_ids = fields.One2many('reception.order','customer_id')
 	intakeform_ids = fields.One2many('unit.intakeform','customer_id')
 	relative_ids = fields.One2many('reception.relative','customer_id')
@@ -32,7 +33,8 @@ class ReceptionCustomer(models.Model):
 			rec.total_forms = len(rec.intakeform_ids)
 			rec.total_tests = len(rec.labtest_ids)
 			rec.total_treatmentplans = len(rec.treatmentplan_ids)
-
+			rec.total_prescriptions = self.env['unit.prescription'].search_count([
+				('guest_id.customer_id','=',rec.id)])
 
 	def action_view_guests(self):
 		self.ensure_one()
@@ -40,23 +42,22 @@ class ReceptionCustomer(models.Model):
 			'type': 'ir.actions.act_window',
 			'name': _('Guests'),
 			'res_model': 'unit.guest',
-			'view_mode': 'list,pivot,graph',
+			'view_mode': 'list',
 			'search_view_id': self.env.ref('nm_treatment_unit.view_guest_search_form').id,
-			'domain': [('partner_id', '=', self.id)],
-			'context':{'default_partner_id': self.id,'create':0}
+			'domain': [('customer_id', '=', self.id)],
+			'context':{'edit': 0,'create':0}
 		}
 
-	def action_create_intake_form(self):
-		if self.total_forms > 0:
-			raise ValidationError(_('This Customer already have a form'))
+	def action_view_prescriptions(self):
+		self.ensure_one()
 		return {
 			'type': 'ir.actions.act_window',
-			'name': _('Intake Form'),
-			'res_model': 'unit.intakeform',
-			'view_mode': 'list,form',
-			'view_id': self.env.ref('nm_reception_treatment_unit.view_intake_form').id,
-			'domain': [('customer_id', '=', self.id)],
-			'context':{'default_customer_id': self.id},
+			'name': _('Prescriptions'),
+			'res_model': 'unit.prescription',
+			'view_mode': 'list,pivot,graph',
+			'search_view_id': self.env.ref('nm_reception_treatment_unit.prescription_tree_view').id,
+			'domain': [('guest_id.customer_id', '=', self.id)],
+			'context':{'create':0,'edit':0}
 		}
 
 	def action_get_intake_form(self):

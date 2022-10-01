@@ -141,12 +141,11 @@
                                         <br/>
                                         <li t-if="record.mobile.raw_value" class="o_text_overflow"><field name="mobile"/></li>
                                     </ul>
-                                </div>
-                                <div class="o_kanban_record_bottom">
-                                    <div class="oe_kanban_bottom_left text-muted">
+                                    <div class="o_row">
                                         <field name="activity_ids" widget="kanban_activity"/>
                                     </div>
                                 </div>
+                               
                             </div>
                         </t>
                     </templates>

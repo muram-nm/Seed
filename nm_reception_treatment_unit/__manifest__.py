@@ -29,6 +29,7 @@
         'views/intake_form_view.xml',
         'views/lab_test_view.xml',
         'views/unit_treatmentplan_view.xml',
+        'views/prescription_view.xml',
         'report/intake_form_template.xml',
         'report/lab_test_template.xml',
         'report/treatmentplan_template.xml',

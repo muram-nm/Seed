@@ -30,10 +30,11 @@
                         icon="fa-list">
                         <field string="Treatment Plans" name="total_treatmentplans" widget="statinfo"/>
                     </button>
-                </xpath>
-
-                <xpath expr="//header" position="inside">
-                    <button name="action_create_intake_form" type="object" string="Create Intake Form"/>
+                    <button class="oe_stat_button" type="object"
+                        name="action_view_prescriptions"
+                        icon="fa-list">
+                        <field string="Prescriptions" name="total_prescriptions" widget="statinfo"/>
+                    </button>
                 </xpath>
 
                 <xpath expr="//notebook/page[@name='other_info']" position="before">
