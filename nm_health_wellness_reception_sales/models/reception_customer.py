@@ -93,7 +93,7 @@ class ReceptionCustomer(models.Model):
         # if user_sudo:
         #     user_sudo.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
         
-        give portal access to the customer
+        # give portal access to the customer
         group_portal = self.env.ref('base.group_portal')
         group_public = self.env.ref('base.group_public')
         for customer in result:
