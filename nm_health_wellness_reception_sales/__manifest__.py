@@ -25,6 +25,7 @@
         "views/menu_views.xml",
         "report/layout.xml",
         "report/templates.xml",
+        "report/badge_print_template.xml",
         "report/reports.xml",
     ],
 

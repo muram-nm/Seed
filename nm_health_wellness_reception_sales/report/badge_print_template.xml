@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="badge_print_template">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="r">
+					<t t-call="nm_health_wellness_reception_sales.external_layout">
+						<div class="page">
+							<div class="row">
+				                <div class="col-3 mb4">
+				                	<t t-set="company" t-value="res_company"/>
+
+				                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;size:25%;" alt="Logo"/>
+				                </div>
+				             
+				            </div>
+						  
+						  		<p>
+									<b>NAME: </b> <br/><span t-field="r.name"/>
+								</p>
+								<p style="margin-top:25px">
+									<b>CUSTOMER NUMBER: </b> <br/><span t-field="r.customer_no"/>
+								</p>
+								
+								<p>
+									<b>GENDER: </b> <br/><span t-field="r.gender"/>
+								</p>
+								<p>
+									<b>DATE OF BIRTH: </b> <br/><span t-field="r.date_of_birth"/>
+								</p>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<div class="text-center">
+									<img style="display:block;margin:10% auto 0 auto;"
+									 t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', r.get_qr_vals(), 150, 150)"/>
+									
+								</div>
+					</div>
+
+					</t>
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>

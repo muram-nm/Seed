@@ -30,7 +30,7 @@ class ReceptionCustomer(models.Model):
                           compute="_compute_qr_code", store=True)
     orders = fields.Integer(compute='_compute_orders')
     last_order_date = fields.Date(compute='_compute_last_order_date')
-    
+    portal_user = fields.Many2one('res.users',string="Portal User",domain=lambda self: [('groups_id', 'in', self.env.ref('base.group_portal').id)])
 
     @api.constrains('qid')
     def check_qid(self):
@@ -84,64 +84,91 @@ class ReceptionCustomer(models.Model):
         if vals.get('customer_no', _('New')) == _('New'):
             vals['customer_no'] = self.env['ir.sequence'].next_by_code('reception.customer') or _('New')
         result = super(ReceptionCustomer, self).create(vals)
-
-        # give portal access to the customer
-        # group_portal = self.env.ref('base.group_portal')
-        # group_public = self.env.ref('base.group_public')
-        # company = customer.partner_id.company_id or self.env.company
-        # user_sudo = self.sudo().with_company(company.id)._create_user(customer)
-        # if user_sudo:
-        #     user_sudo.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
         
+        # write in related partner
+        result.partner_id.write({
+            'qid':result.qid,
+            'gender':result.gender,
+            'date_of_birth':result.date_of_birth,
+            'qr_code':result.qr_code,
+        })
         # give portal access to the customer
-        group_portal = self.env.ref('base.group_portal')
-        group_public = self.env.ref('base.group_public')
-        for customer in result:
-            if customer.email in self.env['res.users'].search([]).mapped('login'):
-                raise ValidationError (_('there is user with same email'))
-            user_sudo = customer.partner_id.user_id.sudo()
-            if not user_sudo:
-                # create a user if necessary and make sure it is in the portal group
-                company = customer.partner_id.company_id or self.env.company
-                user_sudo = self.sudo().with_company(company.id)._create_user(customer)
-            if not user_sudo.active:
-                user_sudo.write({'active': True, 'groups_id': [(4, group_portal.id), (3, group_public.id)]})
-                # prepare for the signup process
-                user_sudo.partner_id.signup_prepare()
-                self.with_context(active_test=True)._send_email(customer)
-        return result
+        for customer in result:           
+            # protal_wizard = customer.partner_id.env['portal.wizard'].create({})
+            # protal_wizard_user = self.env['portal.wizard.user'].create({
+            #     'partner_id':customer.partner_id.id,
+            #     'email':customer.email,
+            #     'wizard_id':protal_wizard.id
+            #     })
 
-    def _create_user(self,customer):
-        """ create a new user for
+            # protal_wizard_user.action_grant_access()
+            print('customer',customer.partner_id)
+            customer.action_grant_access()
+        return result
+    def action_grant_access(self):
+        """Grant the portal access to the partner.
+
+        If the partner has no linked user, we will create a new one in the same company
+        as the partner (or in the current company if not set).
+
+        An invitation email will be sent to the partner.
+        """
+        self.ensure_one()
+        self._assert_user_email_uniqueness()
+
+
+        group_portal = self.env.ref('base.group_portal')
+        # group_public = self.env.ref('base.group_public')
+
+        # update partner email, if a new one was introduced
+        if self.partner_id.email != self.email:
+            self.partner_id.write({'email': self.email})
+
+        user_sudo = self.user_id.sudo()
+
+        if not user_sudo:
+            # create a user if necessary and make sure it is in the portal group
+            company = self.partner_id.company_id or self.env.company
+            user_sudo = self.sudo().with_company(company.id)._create_user()
+
+        if not user_sudo.active:
+            user_sudo.write({'active': True, 'groups_id': [(4, group_portal.id)]})
+            # prepare for the signup process
+            user_sudo.partner_id.signup_prepare()
+        self.portal_user = user_sudo.id
+        self._send_email()
+
+        return True
+    def _create_user(self):
+        """ create a new user for wizard_user.partner_id
             :returns record of res.users
         """
         return self.env['res.users'].with_context(no_reset_password=True)._create_user_from_template({
-            'email': email_normalize(customer.email),
-            'login': email_normalize(customer.email),
-            'partner_id': customer.partner_id.id,
+            'email': email_normalize(self.email),
+            'login': email_normalize(self.email),
+            'partner_id': self.partner_id.id,
             'company_id': self.env.company.id,
             'company_ids': [(6, 0, self.env.company.ids)],
         })
 
-    def _send_email(self,customer):
+    def _send_email(self):
         """ send notification email to a new portal user """
         self.ensure_one()
 
         # determine subject and body in the portal user's language
-        template = self.env.ref('portal.mail_template_data_portal_welcome')
+        template = self.env.ref('nm_health_wellness_reception_sales.mail_template_data_portal_welcome')
         if not template:
             raise UserError(_('The template "Portal: new user" not found for sending email to the portal user.'))
 
-        lang = customer.partner_id.user_id.sudo().lang
-        partner = customer.partner_id.user_id.sudo().partner_id
-
+        lang = self.user_id.sudo().lang
+        partner = self.partner_id
+        print('customersssssssssss',partner)
         portal_url = partner.with_context(signup_force_type_in_url='', lang=lang)._get_signup_url_for_action()[partner.id]
-        partner.signup_prepare()
+        # partner.signup_prepare()
 
         template.with_context(dbname=self._cr.dbname, portal_url=portal_url, lang=lang).send_mail(self.id, force_send=True)
 
         return True
-
     def action_show_orders(self):
         self.ensure_one()
         return {
@@ -152,11 +179,33 @@ class ReceptionCustomer(models.Model):
             'search_view_id': self.env.ref('nm_health_wellness_reception_sales.reception_order_search_view').id,
             'domain': [("partner_id", "=", self.partner_id.id)],
         }
+    def _assert_user_email_uniqueness(self):
+        """Check that the email can be used to create a new user."""
+        self.ensure_one()
+
+        email = email_normalize(self.email)
+
+        if not email:
+            raise UserError(_('The contact "%s" does not have a valid email.', self.partner_id.name))
+
+        user = self.env['res.users'].sudo().with_context(active_test=False).search([
+            ('id', '!=', self.user_id.id),
+            ('login', '=ilike', email),
+        ])
+
+        if user:
+            raise UserError(_('The contact "%s" has the same email has an existing user (%s).', self.partner_id.name, user.name))
 
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+
+    qid = fields.Char('QID')
+    gender = fields.Selection([('male', 'Male'),
+                               ('female', 'Female')])
+    date_of_birth = fields.Date('Date of Birth')
+    qr_code = fields.Char(string="QR Code")
 
     def write(self, vals):
         customer_id = self.env['reception.customer'].search([('partner_id', '=', self.id)], limit=1)
